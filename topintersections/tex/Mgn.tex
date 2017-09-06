@@ -1,0 +1,151 @@
+\documentclass{amsart}
+
+\usepackage{hyperref}
+\author{Drew Johnson}
+
+\newcommand{\M}[2]{\overline{\mathcal M}_{{#1},{#2}}}
+\newcommand{\Mgn}{\M gn}
+\newcommand{\ch}{\text{ch}}
+\newcommand{\di}{\delta_{\text{irr}}}
+
+\title{Computing Top Intersections on $\Mgn$ in Sage}
+
+\begin{document}
+
+
+
+\begin{abstract}
+We describe code written using the open source mathematics project Sage that computes top intersection on the moduli space of stable $n$-pointed genus $g$ curves.  Our implementation has no theoretical upper bound, is written using open source software, and can compute any intersection involving boundary divisors, $\psi$ classes, $\kappa$ classes, $\lambda$ classes, and the chern character classes.  
+\end{abstract}
+
+\maketitle
+\section{Purpose of Algorithm}
+Let $\Mgn$ be the Deligne-Mumford compactification of the moduli space of genus $g$ curves with $n$ marked points.  There are some geometrically defined classes that are part of the so-called tautological ring.  We would like to be able to compute any top intersection of these classes, i.e. any intersection with degree equal to the dimension $3g-3+n$.  We want to consider the classes
+\begin{align*}
+&\psi_i,\; i = 1, \dots, n \\
+&\kappa_i,\; i = 1, \dots, 3g-3+n\\
+&\lambda_i,\; i = 1, \dots, g \\
+&\ch_i,\; i = 1, 3, 5, \dots, 2g-1
+\end{align*}  
+as well as the boundary divisors.  The $\psi$-classes and boundary divisors have codimension 1, while the remaining classes have codimension equal to their subscript.  We refer to reader to \cite{AC} for the definitions of the $\psi$ and $\kappa$-classes.  The $\lambda$ classes are the chern classes of the Hodge bundle, and the $\ch_i$ are the coefficients of the associated chern character.  It is a property of the Hodge bundle that $\ch_i=0$ for $i$ even, so it suffices to consider only $i$ odd.
+
+The boundary divisors are the image of a so called gluing morphism, either 
+\[
+ \xi_{red}: \M{g_1}{N_1 \cup \{\star\}} \times \M{g_2}{N_2 \cup \{\bullet\}} \rightarrow \M{g}{n}
+\]
+where $g = g_1 + g_2$ and $N_1 \coprod N_2 = \{1, \dots, n\}$ is a partition, or
+\[
+	\xi_{irr}: \M{g-1}{n + 2}  \rightarrow \M gn
+\]
+where the two extra points are identified.  We take the convention as in \cite{faber}, that is that the boundary classes are the fundamental class of this image divided by the degree of this map.  The degree is $2$ for $\xi_{irr}$, and is 1 for $\xi_{red}$ except when $n=0$ and $g_1=g_2$. In this case the degree is $2$.  The class associated with $\xi_{irr}$ we denote by $\di$.
+
+Our goal is to take an arbitrary monomial in these classes and compute the integral, or push-forward to a point, of these classes.
+
+\section{Description of Algorithm}
+  In order to compute intersections with boundary divisors, it suffices to pull back the remaining classes by the associated map and compute the intersection on the new moduli space or product of moduli spaces.  Recall that the Chow ring of a product of spaces is the tensor product of the respective Chow rings.  If $\alpha$ is $\kappa_i$, $\lambda_i$ or $\ch_i$, then it pulls back nicely:
+\[
+	\xi_{red}^*(\alpha) = \alpha \otimes 1 + 1 \otimes \alpha
+\]
+and
+\[
+	\xi_{irr}^*(\alpha) = \alpha
+\]
+(notice that the $\alpha$s on the right hand side of the equation are classes on different spaces than the $\alpha$s are the left hand side).
+
+For $\psi$ classes, we have
+\begin{align*}
+	\xi_{red}^{*}(\psi_i) &= \begin{cases} \psi_i \otimes 1 & \text{if } i \in N_1 \\
+																				1 \otimes \psi_i & \text{if } i \in N_2 \end{cases} \\
+	\xi_{irr}^*(\psi_i) &= \psi_i.																				
+\end{align*}
+
+For boundary classes, the formulas are more complicated.  They were written out by Faber in \cite{faber}, including the cases of self intersection.
+
+Now we may assume that there are no boundary divisors.  First, we would like to express the $\lambda$ classes in terms of the chern character.  This is accomplished via the formula
+\[
+ 1 + \lambda_1 t + \lambda_2 t^2 + \dots + \lambda_g t^g = \exp \left(\sum_{i = 1}^g (2i-2)!\ch_{2i-1}t^{2i-1}\right).
+\]
+
+Next, we can express the chern characters in terms of $\psi$ and $\kappa$ classes via the formula (see \cite{yang}, originally in \cite{mumford})
+\[
+ \ch_a = \frac{B_{a+1}}{(a+1)!} \left( \kappa_a - \sum_{i = 1}^n \psi_i^a + \frac12 \sum_{i=0}^{a-1} (-1)^i\sum_{\xi} \xi_* (\psi_{\star}^i  \psi_{\bullet}^{a-1-i}) \right)
+\]
+where the last sum is taken over all possible gluing morphisms $\xi$.
+
+We will often require the use of the projection formula in this step.  For example, the expansion of $\psi_1 \ch_2$ will contain a term of the form
+\[
+	\psi_1 (\xi_{red})_* (\psi_{\star} \otimes 1).
+\]
+which by the projection formula is equal to
+\[
+	(\xi_{red})_*( \psi_\star \otimes 1 \cdot \xi_{red}^*\psi_1)
+\]
+so it suffices to compute
+\[
+\int_{\M{g_1}{N_1 \cup \{\star\}} \times \M{g_2}{N_2 \cup \{\bullet\}}}  \psi_\star \otimes 1 \cdot \xi_{red}^*\psi_1.
+\]
+
+Now, we may assume that we only have $\psi$ and $\kappa$ classes left.  In \cite{AC}, it is observed that knowing either the intersections of either the $\psi$ classes or the $\kappa$ classes will give you the intersections of \emph{all} mixed intersections in $\psi$s and $\kappa$s.  In \cite{yang}, a practical formula to reduce to just the $\psi$s is (correcting a typographical error)
+\[
+\int_{\Mgn} \psi_1^{\alpha_1} \cdots \psi_n^{\alpha_n} \kappa_{b_1} \cdots \kappa_{b_m} = \int_{\M{g}{n+1}}  \psi_1^{\alpha_1} \cdots \psi_n^{\alpha_n}\psi_{n+1}^{b_m} \prod_{j = 2}^m (\kappa_{b_j} - \psi_{n+1}^{b_j})
+\]
+which will eliminate one $\kappa$ class at a time at the cost of introducing a new marked point.  
+
+Thus, it suffices now to consider the case of $\psi$ classes alone.  These can be computed by the Witten-Kontsevich conjecture.  A practical way to compute them is in Lui and Xu \cite{liu-xu}, who give an induction on the genus.  Translating their notation into ours, this formula is 
+\begin{align*}
+ (2g +n-1) (2g+n - 2) &\int_{\Mgn} \psi_1^{d_1} \cdots \psi_n^{d_n} = \\
+ \frac{2d_1 + 3}{12} &\int_{\M{g-1}{n+4}} \psi_1^{d_1+1} \psi_2^{d_2} \cdots \psi_n^{d_n} - \frac{2g+n-1}{6} \int_{\M{g-1}{n+3}} \psi_1^{d_1} \cdots \psi_n^{d_n} \\ 
+ 	+ &\sum_{I \coprod J = \{2, \dots, n\}}  (2d_1 +3) \sum_{g'}\int_{\M{g'}{|I| + 3}} \psi_1^{d_1 + 1} \prod_{i \in I} \psi_i^{d_i} \cdot \int_{\M{g-g'}{|J| + 2}} \prod_{j \in J} \psi_i^{d_i} \\
+ 	- &\sum_{I \coprod J = \{2, \dots, n\}}  (2g-n-1) \sum_{g'}\int_{\M{g'}{|I| + 2}} \psi_1^{d_1} \prod_{i \in I} \psi_i^{d_i} \cdot \int_{\M{g-g'}{|J| +2}} \prod_{j \in J} \psi_j^{d_j}.
+\end{align*}
+Using this formula along with the string equation and the dilaton equation, one can reduce all $\psi$ intersections to the well known base cases
+\[
+ \int_{\M03} \emptyset = 1
+\]
+and
+\[
+	\int_{\M11} \psi_1 = \frac{1}{24}.
+\]
+
+Computing intersections involving large powers of $\di$ is particularly computationally intensive since the self intersection formula involves summing over all boundary divisors, so we use a trick from \cite{faber} to speed it up.  This trick allows us to reduce the computation of monomials involving only $\psi$, $\kappa$ and $\di$ classes to the computation of intersections on $\overline{\mathcal M}_g$ or $\M11$, which have much fewer boundary divisors.  We give an example to illustrate this explicitly.  Suppose we wish to compute
+\begin{equation}
+	\int_{\M23} \di^2 \kappa_2 \psi_1^2. \label{eq:compute-trick}
+\end{equation}
+Let $\pi$ be the forgetful map
+\[
+	\pi: \M23 \rightarrow \M22
+\]
+that forgets the third marked point.
+
+Formula (1.7) of \cite{AC} tells us that in general
+\[
+	\kappa_a = \pi^* \kappa_a + \psi_{n+1}^a,
+\]
+where $n+1$ is the point forgotten by $\pi$.  In \cite{faber}, it is noted that $\di$ is a pullback of $\di$ under $\pi$, so  \eqref{eq:compute-trick} is equal to
+\[
+ \int_{\M23} \pi^* \di^2 (\pi^* \kappa_2 + \psi_3^2) \psi_1^2 = \int_{\M23} \psi_1^2 \pi^*(\di^2 \kappa_2) + \psi_1^2\psi_3^2 \pi^*\di^2.
+\]
+Now, recall that integration is really pushing down to a point.  Thus, we can apply $\pi_*$ to the integrands to get
+\[
+ \int_{\M22} \pi_*(\psi_1^2 \pi^*(\di^2 \kappa_2)) + \pi_*(\psi_1^2\psi_3^2 \pi^*\di^2)
+\]
+which by the projection formula is 
+\[
+	\int_{\M22} \pi_*(\psi_1^2) \di^2 \kappa_2 + \pi_*(\psi_1^2\psi_3)\di^2. 
+\]
+We can push down $\psi$ classes using the equations (1.7) and (1.9) of \cite{AC}), yielding
+\[
+  \int_{\M22} \psi_1 \di^2 \kappa_2 + \psi_1^2 \kappa_1 \di^2.
+\]
+  We have reduced the number of marked points by one.  Repeating this will eventually reduce the computation to computing intersections on $\M20$.  Notice also that if no $\kappa$ classes are involved, this can be accomplished in one step via the formula (1.12) of \cite{AC}.
+  
+\section{User Interface}
+One goal of this project is to make a convenient user interface.  We have created a Sage notebook that demonstrates this.  It can be accessed at \url{http://www.sagenb.org/home/pub/3057/}.
+\section{Availability}
+The source is available from BitBucket at \url{https://bitbucket.org/drew_j/top-intersections-on-mbar_g-n}, or from the author by email at \href{mailto:werd2.718@gmail.com}{\nolinkurl{werd2.718@gmail.com}}.  Please refer to the Sage notebook mentioned in the previous section for usage instructions.  You can run this program from the online Sage notebook server \url{www.sagenb.org}, or you can install Sage on your local machine.  Sage is open source and freely available at \url{www.sagemath.org}.
+\bibliographystyle{halpha}
+
+\bibliography{ref}
+
+
+\end{document}
