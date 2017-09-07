@@ -24,9 +24,6 @@ strataalgebra
 
 This module computes product in the strata algebra. It also contains some of A. Pixton's code to compute FZ relations. 
 
-Read the detailed documentation `here`_.
-
-.. _here: https://rawgit.com/uberparagon/mgn/master/strataalgebra/_build/html/index.html
 
 To see if it is installed, try:
 
