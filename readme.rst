@@ -27,10 +27,30 @@ Read the detailed documentation `here`_.
 
 .. _here: https://rawgit.com/uberparagon/mgn/master/strataalgebra/_build/html/index.html
 
-To see if it is installed, try:
-
-    ::
+To see if it is installed, try: ::
     
     sage: from strataalgebra import *
     sage: StrataAlgebra(QQ, 1, (1,2))
     StrataAlgebra with genus 1 and markings (1, 2) over RationalField
+    
+topintersections
+================= 
+
+To see if it is installed, try: ::
+    
+    sage: from topintersections import *
+    ***************************************************************************
+    Welcome to the intersection number computer for the moduli space of curves!
+
+    Written by Drew Johnson, based on Carel Faber's exposition and Maple code.
+ 
+    The main commands are "intnum" to compute the intersection number, and 
+    "space" to select the space.  Type help(intnum) or help(space) for more 
+    information.
+ 
+    Type save_data("filename") to save the results computed this session and 
+    load_data("filname") to retrieve previously saved data.  The default filename is 
+    "mgn_top_intersect.dat" if not specified.
+
+    Ctrl-D to quit.
+    ***************************************************************************
