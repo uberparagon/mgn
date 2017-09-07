@@ -1,3 +1,4 @@
+
 Installation
 ==============
 
@@ -9,7 +10,7 @@ The –user option is optional and allows to install the module in your user spa
 
 If that doesn't work try updating sage (some earlier versions of sage are packaged with an incompatible version of PyPI.)
 
-If that still fails, try downloading the source, extracting it, opening a terminal in the directory that has the ``setup.py`` file, and run
+If that still fails, try downloading the source, extracting it, opening a terminal in the directory that has the ``setup.py`` file, and run: ::
 
     $ sage setup.py -install
 
