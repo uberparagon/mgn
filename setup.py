@@ -4,7 +4,7 @@ setup(
     name='mgn',
     version='1.0.0',
     packages=['strataalgebra', 'topintersections'],
-    url='TODO',
+    url='https://github.com/uberparagon/mgn',
     license='TODO',
     author='Drew Johnson',
     author_email='werd2.718@gmail.com',
