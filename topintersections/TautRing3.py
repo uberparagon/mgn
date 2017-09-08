@@ -149,11 +149,7 @@ class Mgn(object):
             
     def mak(self, where):
         """
-        Creates symbols in the namespace ``where`` for all the classes on this space.  This makes it so you can type in e.g. 
-        
-            sage: psi1*ka2
-        
-        and it knows what you mean.
+        Creates symbols in the namespace ``where`` for all the classes on this space.  This makes it so you can type in e.g. psi1*ka2 and it knows what you mean.
         """
         for long_name_for_class_that_probably_wont_be_in_global_namespace in self.classes:
             if long_name_for_class_that_probably_wont_be_in_global_namespace != 0:

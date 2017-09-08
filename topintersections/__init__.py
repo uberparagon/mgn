@@ -1,3 +1,3 @@
-from intersection_ui import intnum
+from intersection_ui import *
 
-__all__ = ["intnum", "space"]
+__all__ = ["intnum", "space", "change_space", "save_data", "load_data"]

@@ -1,5 +1,5 @@
 
-from sage.all import cached_method, CommutativeRings, prod, Rational, factorial, floor, Matrix, ZZ, subsets, var
+from sage.all import cached_method, CommutativeRings, prod, Rational, factorial, floor, Matrix, ZZ, subsets, var, RR
 from sage.rings.commutative_algebra import CommutativeAlgebra
 from sage.structure.unique_representation import UniqueRepresentation
 from sage.structure.element import CommutativeAlgebraElement
@@ -78,6 +78,7 @@ class StrataAlgebraElement(CommutativeAlgebraElement):
         """
         Return a dictionary with keys as StrataGraph objects and values as the coefficient of that stratum in this element.
 
+            sage: from strataalgebra import *
             sage: s = StrataAlgebra(QQ,1,(1,2,3)); s
             Strata algebra with genus 1 and markings (1, 2, 3) over Rational Field
             sage: a = s.psi(1)*s.psi(2) - 7* s.kappa(3); a
@@ -126,9 +127,13 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
         :param int g: The genus.
         :param tuple markings: The markings. They should be positive integers. Repeats are allowed. Defaults to no markings.
         :param bool make_vars: Defaults to True. If True, creates variables ps, ps2, ka1, ... , ka{d} (where d is the dimension of the moduli space) that can be used to create basis elements.
+            
+        First import the module: ::
+        
+            sage: from strataalgebra import *
 
         Construct a :class:`StrataAlgebra`: ::
-
+            
             sage: SA = StrataAlgebra(QQ,1,(1,2)); SA
             Strata algebra with genus 1 and markings (1, 2) over Rational Field
 
@@ -368,7 +373,8 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
 
 
         .. SEEALSO::
-            :meth:`StrataAlgebraElement.integrate`
+        
+            :meth:`strataalgebra.StrataAlgebraElement.integrate`
 
             :meth:`~strataalgebra.StrataAlgebra.betti`
 
@@ -420,6 +426,7 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
         This is used by :meth:`StrataAlgebraElement.integrate` which is the more likely way you will want to use it.
         ::
 
+            sage: from strataalgebra import *
             sage: s = StrataAlgebra(QQ,1,(1,))
             sage: s.print_strata(1)
             **** i: 0
@@ -458,7 +465,8 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
         """
         Compute all the products of basis elements of the ring (thus caching their values).
         This could take a long time for some rings. ::
-
+        
+            sage: from strataalgebra import *
             sage: s = StrataAlgebra(QQ,1,(1,))
             sage: s.do_all_products()
 
@@ -627,7 +635,8 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
         :rtype: :class:`StrataAlgebraElement`
 
         Examples ::
-
+        
+            sage: from strataalgebra import *
             sage: s = StrataAlgebra(QQ,0,(1,2,3,4,5))
             sage: psi1 = s.psi(1); psi1
             ps1
@@ -693,6 +702,7 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
 
         ::
 
+            sage: from strataalgebra import *
             sage: s = StrataAlgebra(QQ,2,())
             sage: s.kappa(1)
             ka1
@@ -732,7 +742,9 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
         :rtype: :class:`StrataAlgebraElement`
 
         Note that if the two components are the same, it will return the stratum with a coefficient of 1/2. ::
-
+        
+        
+            sage: from strataalgebra import *
             sage: s = StrataAlgebra(QQ, 1, (1,2,3))
             sage: s.boundary(0, (1,2))
             Dg0m1_2
@@ -766,7 +778,8 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
     def irr(self):
         """
         Make the irreducible boundary. It will be returned with a coefficient of 1/2. ::
-
+        
+            sage: from strataalgebra import *
             sage: s = StrataAlgebra(QQ, 1, (1,2))
             sage: s.irr()
             1/2*D_irr
@@ -790,6 +803,7 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
 
         Examples: ::
 
+            sage: from strataalgebra import *
             sage: s = StrataAlgebra(QQ,1,(1,2))
             sage: s.MgnLb_int([1,6])
             1/2
@@ -810,6 +824,7 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
         Returns the class corresponding to the index from Carl Faber's Mgn_Lb Maple program.
         This is useful for testing purposes. ::
 
+            sage: from strataalgebra import *
             sage: s = StrataAlgebra(QQ,1,(1,2))
             sage: s.MgnLb_class(1)
             ps1
@@ -866,6 +881,7 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
 
         ::
 
+            sage: from strataalgebra import *
             sage: StrataAlgebra(QQ, 2, (1,)).betti()
             [1, 4, 17, 49, 92]
             sage: StrataAlgebra(QQ, 2, (1,)).betti(2)
@@ -885,7 +901,8 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
         :param codim: Optional. The codimension you want.
 
         ::
-
+            
+            sage: from strataalgebra import *
             sage: StrataAlgebra(QQ, 2, (1,)).FZ_betti()
             [1, 3, 5, 3, 1]
             sage: StrataAlgebra(QQ, 2, (1,)).FZ_betti(2)
