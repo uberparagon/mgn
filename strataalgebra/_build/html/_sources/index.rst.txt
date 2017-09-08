@@ -22,7 +22,13 @@ The code was integrated into this package (with some modifications and optimizat
 
 Installation
 =========================================
-Installation should be (hopefully) easy.
+Installation should be (hopefully) easy. ``strataalgebra`` is distributed as part of the ```mgn`` package`_.
+
+.. _``mgn`` package: https://github.com/uberparagon/mgn
+
+Once it is installed, you can load it in a sage session by typing: ::
+
+    sage: from strataalgebra import *
 
 How to use
 =============

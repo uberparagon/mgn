@@ -23,9 +23,9 @@ strataalgebra
 
 This module computes product in the strata algebra. It also contains some of A. Pixton's code to compute FZ relations. 
 
-Read the detailed documentation `here`_.
+`Read the detailed documentation`_.
 
-.. _here: https://rawgit.com/uberparagon/mgn/master/strataalgebra/_build/html/index.html
+.. _Read the detailed documentation: https://rawgit.com/uberparagon/mgn/master/strataalgebra/_build/html/index.html
 
 To see if it is installed, try: ::
     
@@ -36,9 +36,9 @@ To see if it is installed, try: ::
 topintersections
 ----------------- 
 
-This module computes top intersections. For details, see `here`_.
+This module computes top intersections. `Read the quick-start guide`_.
 
-.. _here: https://raw.githubusercontent.com/uberparagon/mgn/master/topintersections/_build/index.html
+.. _Read the quick-start guide: https://raw.githubusercontent.com/uberparagon/mgn/master/topintersections/_build/index.html
 
 To see if it is installed, try: ::
     
