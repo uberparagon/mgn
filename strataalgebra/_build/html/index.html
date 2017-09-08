@@ -87,6 +87,10 @@ The code was integrated into this package (with some modifications and optimizat
 </tr>
 </tbody>
 </table>
+<p>First import the module:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">strataalgebra</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
 <p>Construct a <code class="xref py py-class docutils literal"><span class="pre">StrataAlgebra</span></code>:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">SA</span> <span class="o">=</span> <span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span><span class="mi">1</span><span class="p">,(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">));</span> <span class="n">SA</span>
 <span class="go">Strata algebra with genus 1 and markings (1, 2) over Rational Field</span>
@@ -319,7 +323,7 @@ Compare the codimension 2 strata to our earlier example.</p>
 </div>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p><code class="xref py py-meth docutils literal"><span class="pre">StrataAlgebraElement.integrate()</span></code></p>
+<p><code class="xref py py-meth docutils literal"><span class="pre">strataalgebra.StrataAlgebraElement.integrate()</span></code></p>
 <p><a class="reference internal" href="#strataalgebra.StrataAlgebra.betti" title="strataalgebra.StrataAlgebra.betti"><code class="xref py py-meth docutils literal"><span class="pre">betti()</span></code></a></p>
 <p class="last"><a class="reference internal" href="#strataalgebra.StrataAlgebra.FZ_betti" title="strataalgebra.StrataAlgebra.FZ_betti"><code class="xref py py-meth docutils literal"><span class="pre">FZ_betti()</span></code></a></p>
 </div>
@@ -336,7 +340,8 @@ If the codimension is omited, return a list of all of them.</p>
 </tr>
 </tbody>
 </table>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,))</span><span class="o">.</span><span class="n">FZ_betti</span><span class="p">()</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">strataalgebra</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">sage: </span><span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,))</span><span class="o">.</span><span class="n">FZ_betti</span><span class="p">()</span>
 <span class="go">[1, 3, 5, 3, 1]</span>
 <span class="gp">sage: </span><span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,))</span><span class="o">.</span><span class="n">FZ_betti</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="go">5</span>
@@ -395,7 +400,8 @@ This matrix should be the same as Pixton&#8217;s original <cite>tautrel.sage</ci
 <code class="descname">MgnLb_class</code><span class="sig-paren">(</span><em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#strataalgebra.StrataAlgebra.MgnLb_class" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the class corresponding to the index from Carl Faber&#8217;s Mgn_Lb Maple program.
 This is useful for testing purposes.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">s</span> <span class="o">=</span> <span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span><span class="mi">1</span><span class="p">,(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">strataalgebra</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">sage: </span><span class="n">s</span> <span class="o">=</span> <span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span><span class="mi">1</span><span class="p">,(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
 <span class="gp">sage: </span><span class="n">s</span><span class="o">.</span><span class="n">MgnLb_class</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="go">ps1</span>
 <span class="gp">sage: </span><span class="n">s</span><span class="o">.</span><span class="n">MgnLb_class</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
@@ -423,7 +429,8 @@ This is useful for testing purposes.</p>
 </tbody>
 </table>
 <p>Examples:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">s</span> <span class="o">=</span> <span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span><span class="mi">1</span><span class="p">,(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">strataalgebra</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">sage: </span><span class="n">s</span> <span class="o">=</span> <span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span><span class="mi">1</span><span class="p">,(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
 <span class="gp">sage: </span><span class="n">s</span><span class="o">.</span><span class="n">MgnLb_int</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">])</span>
 <span class="go">1/2</span>
 <span class="gp">sage: </span><span class="n">s</span><span class="o">.</span><span class="n">MgnLb_int</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
@@ -441,12 +448,13 @@ This is useful for testing purposes.</p>
 <dl class="attribute">
 <dt id="strataalgebra.StrataAlgebra.basis_integrals">
 <code class="descname">basis_integrals</code><a class="headerlink" href="#strataalgebra.StrataAlgebra.basis_integrals" title="Permalink to this definition">¶</a></dt>
-<dd><p>File: /Users/drewjohnson/mgn/strataalgebra/strataalgebra.py (starting at line 411)</p>
+<dd><p>File: /Users/drewjohnson/mgn/strataalgebra/strataalgebra.py (starting at line 417)</p>
 <p>Return a list of numbers corresponding to the integrals of the basis elements in the top codimension.</p>
 <p>This is computed via the FZ relations, so it is probably not fast. However, it is a nice check.</p>
 <p>The value is cached, so you only have to compute it once per session.</p>
 <p>This is used by <code class="xref py py-meth docutils literal"><span class="pre">StrataAlgebraElement.integrate()</span></code> which is the more likely way you will want to use it.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">s</span> <span class="o">=</span> <span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span><span class="mi">1</span><span class="p">,(</span><span class="mi">1</span><span class="p">,))</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">strataalgebra</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">sage: </span><span class="n">s</span> <span class="o">=</span> <span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span><span class="mi">1</span><span class="p">,(</span><span class="mi">1</span><span class="p">,))</span>
 <span class="gp">sage: </span><span class="n">s</span><span class="o">.</span><span class="n">print_strata</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="go">**** i: 0</span>
 <span class="go">D_irr</span>
@@ -477,7 +485,8 @@ If the codimension is omitted, return a list of all of them.</p>
 </tr>
 </tbody>
 </table>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,))</span><span class="o">.</span><span class="n">betti</span><span class="p">()</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">strataalgebra</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">sage: </span><span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,))</span><span class="o">.</span><span class="n">betti</span><span class="p">()</span>
 <span class="go">[1, 4, 17, 49, 92]</span>
 <span class="gp">sage: </span><span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,))</span><span class="o">.</span><span class="n">betti</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="go">17</span>
@@ -505,7 +514,8 @@ If the codimension is omitted, return a list of all of them.</p>
 </tbody>
 </table>
 <p>Note that if the two components are the same, it will return the stratum with a coefficient of 1/2.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">s</span> <span class="o">=</span> <span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">strataalgebra</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">sage: </span><span class="n">s</span> <span class="o">=</span> <span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
 <span class="gp">sage: </span><span class="n">s</span><span class="o">.</span><span class="n">boundary</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
 <span class="go">Dg0m1_2</span>
 <span class="gp">sage: </span><span class="n">s</span><span class="o">.</span><span class="n">boundary</span><span class="p">(</span><span class="mi">1</span><span class="p">,[</span><span class="mi">3</span><span class="p">])</span>
@@ -529,7 +539,8 @@ If the codimension is omitted, return a list of all of them.</p>
 <code class="descname">do_all_products</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#strataalgebra.StrataAlgebra.do_all_products" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute all the products of basis elements of the ring (thus caching their values).
 This could take a long time for some rings.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">s</span> <span class="o">=</span> <span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span><span class="mi">1</span><span class="p">,(</span><span class="mi">1</span><span class="p">,))</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">strataalgebra</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">sage: </span><span class="n">s</span> <span class="o">=</span> <span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span><span class="mi">1</span><span class="p">,(</span><span class="mi">1</span><span class="p">,))</span>
 <span class="gp">sage: </span><span class="n">s</span><span class="o">.</span><span class="n">do_all_products</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -561,7 +572,8 @@ This could take a long time for some rings.</p>
 <dt id="strataalgebra.StrataAlgebra.irr">
 <code class="descname">irr</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#strataalgebra.StrataAlgebra.irr" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make the irreducible boundary. It will be returned with a coefficient of 1/2.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">s</span> <span class="o">=</span> <span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">strataalgebra</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">sage: </span><span class="n">s</span> <span class="o">=</span> <span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
 <span class="gp">sage: </span><span class="n">s</span><span class="o">.</span><span class="n">irr</span><span class="p">()</span>
 <span class="go">1/2*D_irr</span>
 </pre></div>
@@ -582,7 +594,8 @@ This could take a long time for some rings.</p>
 </tr>
 </tbody>
 </table>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">s</span> <span class="o">=</span> <span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span><span class="mi">2</span><span class="p">,())</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">strataalgebra</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">sage: </span><span class="n">s</span> <span class="o">=</span> <span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span><span class="mi">2</span><span class="p">,())</span>
 <span class="gp">sage: </span><span class="n">s</span><span class="o">.</span><span class="n">kappa</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="go">ka1</span>
 <span class="gp">sage: </span><span class="n">s</span><span class="o">.</span><span class="n">kappa</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
@@ -624,7 +637,8 @@ This could take a long time for some rings.</p>
 :param int mark:  The mark that the <span class="math">\(\psi\)</span>-class is associated to.
 :rtype: <code class="xref py py-class docutils literal"><span class="pre">StrataAlgebraElement</span></code></p>
 <p>Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">s</span> <span class="o">=</span> <span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span><span class="mi">0</span><span class="p">,(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">strataalgebra</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">sage: </span><span class="n">s</span> <span class="o">=</span> <span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span><span class="mi">0</span><span class="p">,(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
 <span class="gp">sage: </span><span class="n">psi1</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">psi</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="n">psi1</span>
 <span class="go">ps1</span>
 <span class="gp">sage: </span><span class="n">psi2</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">psi</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span> <span class="n">psi2</span>
