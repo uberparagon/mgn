@@ -19,7 +19,7 @@ mgn Package
 The ``mgn`` package contains two modules for computations on the moduli space of curves.
 
 strataalgebra
-==============
+--------------
 
 This module computes product in the strata algebra. It also contains some of A. Pixton's code to compute FZ relations. 
 
@@ -34,11 +34,11 @@ To see if it is installed, try: ::
     StrataAlgebra with genus 1 and markings (1, 2) over RationalField
     
 topintersections
-================= 
+----------------- 
 
 This module computes top intersections. For details, see `here`_.
 
-.. _here: topintersections/readme.rst
+.. _here: https://raw.githubusercontent.com/uberparagon/mgn/master/topintersections/_build/index.html
 
 To see if it is installed, try: ::
     

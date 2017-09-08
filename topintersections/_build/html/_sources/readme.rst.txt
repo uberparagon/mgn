@@ -41,7 +41,9 @@ You can use the space command to set the space you are working in. The first arg
 
     1. It prints a list of classes and indexes for easy reference.
     2. It sets the defaut space. This will be the space that the code will work in if you don't specify one in the function calls.
-    3. It injects the variables names into your namespace so you can use them to make polynomials. ::
+    3. It injects the variables names into your namespace so you can use them to make polynomials. 
+    
+    ::
 
 
     sage: space(2,1)
@@ -129,7 +131,7 @@ If the degree is not correct, you will know. (The code only computes top interse
 Some more examples
 ===================
 
-Here are some of the intersection numbers from Faber's paper:
+Here are some of the intersection numbers from Faber's paper: ::
 
     sage: intnum(4,0, irr^9)
     Computing the intersection of irr^9 over Mbar_4_0...
@@ -141,12 +143,12 @@ Here are some of the intersection numbers from Faber's paper:
 Options
 ========
 
-You can suppress the helpful message that tells you what you are computing using the confirm keyword argument.
+You can suppress the helpful message that tells you what you are computing using the confirm keyword argument. ::
 
     sage: intnum(2,2,psi1^5, confirm = False)
     1/1152
 
-You can have the program return zero if the degree is wrong instead of raising an exception by using the check_degree keyword argument.
+You can have the program return zero if the degree is wrong instead of raising an exception by using the check_degree keyword argument. ::
 
     sage: intnum(2,2, psi1^2, check_degree = False)
     Computing the intersection of psi1^2 over Mbar_2_2...
