@@ -785,11 +785,10 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
         """
         Computes an integral of boundary divisors, kappa classes, and psi classes.
 
-        :param index_list: A list of indices of classes, according the the scheme of Carl Faber's MgnLb Maple program.
-        This function is useful because so you can test our implementation of the product and the FZ_relations.
+        :param index_list: A list of indices of classes, according the the scheme of Carl Faber's MgnLb Maple program. This function is useful because so you can test our implementation of the product and the FZ_relations.
         :rtype: `Rational`
 
-        ::
+        Examples: ::
 
             sage: s = StrataAlgebra(QQ,1,(1,2))
             sage: s.MgnLb_int([1,6])

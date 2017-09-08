@@ -35,6 +35,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="#">StrataAlgegra 1.0.0 documentation</a> &#187;</li> 
       </ul>
     </div>  
@@ -413,12 +416,13 @@ This is useful for testing purposes.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index_list</strong> &#8211; A list of indices of classes, according the the scheme of Carl Faber&#8217;s MgnLb Maple program.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index_list</strong> &#8211; A list of indices of classes, according the the scheme of Carl Faber&#8217;s MgnLb Maple program. This function is useful because so you can test our implementation of the product and the FZ_relations.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><cite>Rational</cite></td>
 </tr>
 </tbody>
 </table>
-<p>This function is useful because so you can test our implementation of the product and the FZ_relations.
-:rtype: <cite>Rational</cite></p>
+<p>Examples:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">s</span> <span class="o">=</span> <span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span><span class="mi">1</span><span class="p">,(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
 <span class="gp">sage: </span><span class="n">s</span><span class="o">.</span><span class="n">MgnLb_int</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">])</span>
 <span class="go">1/2</span>
@@ -670,8 +674,14 @@ sage: s.irr()
 </dd></dl>
 
 </div>
-<div class="section" id="testing">
-<h1>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-tests">
+<span id="testing"></span><h1>Testing<a class="headerlink" href="#module-tests" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal"><span class="pre">tests</span></code> module tests the implementation of the product and the FZ relations by comparing them to the <code class="docutils literal"><span class="pre">topintersections</span></code> code.</p>
+<p>You can change which pairs you want to check by modifying the <code class="docutils literal"><span class="pre">g_n_pairs_to_check</span> <span class="pre">variable</span></code> in the source code <code class="docutils literal"><span class="pre">tests.py</span></code>.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">import</span> <span class="nn">strataalgebra.tests</span> <span class="kn">as</span> <span class="nn">tests</span>
+<span class="gp">sage: </span><span class="n">tests</span><span class="o">.</span><span class="n">run</span><span class="p">()</span> <span class="c1"># long time</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
@@ -693,7 +703,7 @@ sage: s.irr()
 <li><a class="reference internal" href="#">strataalgebra Documentation</a></li>
 <li><a class="reference internal" href="#installation">Installation</a></li>
 <li><a class="reference internal" href="#how-to-use">How to use</a></li>
-<li><a class="reference internal" href="#testing">Testing</a></li>
+<li><a class="reference internal" href="#module-tests">Testing</a></li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 
@@ -724,6 +734,9 @@ sage: s.irr()
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="#">StrataAlgegra 1.0.0 documentation</a> &#187;</li> 
       </ul>
     </div>
