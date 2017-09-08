@@ -228,15 +228,15 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
             sage: a*72 - b/17
             72*s_2,1 + -1/17*s_2,7
 
-        Use :meth:`~StrataAlgebra.get_stratum` if you need to know what an unamed basis element means. ::
+        Use :meth:`~strataalgebra.StrataAlgebra.get_stratum` if you need to know what an unamed basis element means. ::
 
             sage: SA.get_stratum(2,7)
             [     0      1      2      0]
             [     0      1      1      1]
             [     1      0      0 ps + 1]
 
-        You can construct :math:`\psi,\;\kappa` monomials and boundary divisors with the methods :meth:`~StrataAlgebra.kappa`, :meth:`~StrataAlgebra.psi`,
-        :meth:`~StrataAlgebra.boundary`, and :meth:`~StrataAlgebra.irr`.
+        You can construct :math:`\psi,\;\kappa` monomials and boundary divisors with the methods :meth:`~strataalgebra.StrataAlgebra.kappa`, :meth:`~strataalgebra.StrataAlgebra.psi`,
+        :meth:`~strataalgebra.StrataAlgebra.boundary`, and :meth:`~strataalgebra.StrataAlgebra.irr`.
 
         You can construct an element using the matrix notation. Just pass a list of lists into your
         :class:`StrataAlgebra`. ::
@@ -370,9 +370,9 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
         .. SEEALSO::
             :meth:`StrataAlgebraElement.integrate`
 
-            :meth:`~StrataAlgebra.betti`
+            :meth:`~strataalgebra.StrataAlgebra.betti`
 
-            :meth:`~StrataAlgebra.FZ_betti`
+            :meth:`~strataalgebra.StrataAlgebra.FZ_betti`
 
         """
     
@@ -765,7 +765,7 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
         
     def irr(self):
         """
-        Make the irreducible boundary. It will be returned with a coefficient of 1/2.
+        Make the irreducible boundary. It will be returned with a coefficient of 1/2. ::
 
             sage: s = StrataAlgebra(QQ, 1, (1,2))
             sage: s.irr()
@@ -800,7 +800,7 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
 
         .. SEEALSO ::
 
-            :meth:`~StrataAlgebra.MgnLb_class`
+            :meth:`~strataalgebra.StrataAlgebra.MgnLb_class`
 
         """
         return prod(( self.MgnLb_class(i) for i in index_list )).integrate()
@@ -860,7 +860,7 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
         Give the number of basis elements in the Strata algebra for the given codimension.
         If the codimension is omitted, return a list of all of them.
 
-        This is NOT the Betti numbers for the moduli space of curves! For that see :meth:`~StrataAlgebra.FZ_betti`.
+        This is NOT the Betti numbers for the moduli space of curves! For that see :meth:`~strataalgebra.StrataAlgebra.FZ_betti`.
 
         :param int codim: Optional. The codimension you want.
 
@@ -892,7 +892,7 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
             5
 
         .. SEEALSO ::
-            :meth:`~StrataAlgebra.betti`
+            :meth:`~strataalgebra.StrataAlgebra.betti`
 
         """
         if codim is None:

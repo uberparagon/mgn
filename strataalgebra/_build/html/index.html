@@ -183,15 +183,15 @@ and the rest are represented by <cite>s_{codim},{index}</cite></p>
 <span class="go">72*s_2,1 + -1/17*s_2,7</span>
 </pre></div>
 </div>
-<p>Use <code class="xref py py-meth docutils literal"><span class="pre">get_stratum()</span></code> if you need to know what an unamed basis element means.</p>
+<p>Use <a class="reference internal" href="#strataalgebra.StrataAlgebra.get_stratum" title="strataalgebra.StrataAlgebra.get_stratum"><code class="xref py py-meth docutils literal"><span class="pre">get_stratum()</span></code></a> if you need to know what an unamed basis element means.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">SA</span><span class="o">.</span><span class="n">get_stratum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span>
 <span class="go">[     0      1      2      0]</span>
 <span class="go">[     0      1      1      1]</span>
 <span class="go">[     1      0      0 ps + 1]</span>
 </pre></div>
 </div>
-<p>You can construct <span class="math">\(\psi,\;\kappa\)</span> monomials and boundary divisors with the methods <code class="xref py py-meth docutils literal"><span class="pre">kappa()</span></code>, <code class="xref py py-meth docutils literal"><span class="pre">psi()</span></code>,
-<code class="xref py py-meth docutils literal"><span class="pre">boundary()</span></code>, and <code class="xref py py-meth docutils literal"><span class="pre">irr()</span></code>.</p>
+<p>You can construct <span class="math">\(\psi,\;\kappa\)</span> monomials and boundary divisors with the methods <a class="reference internal" href="#strataalgebra.StrataAlgebra.kappa" title="strataalgebra.StrataAlgebra.kappa"><code class="xref py py-meth docutils literal"><span class="pre">kappa()</span></code></a>, <a class="reference internal" href="#strataalgebra.StrataAlgebra.psi" title="strataalgebra.StrataAlgebra.psi"><code class="xref py py-meth docutils literal"><span class="pre">psi()</span></code></a>,
+<a class="reference internal" href="#strataalgebra.StrataAlgebra.boundary" title="strataalgebra.StrataAlgebra.boundary"><code class="xref py py-meth docutils literal"><span class="pre">boundary()</span></code></a>, and <a class="reference internal" href="#strataalgebra.StrataAlgebra.irr" title="strataalgebra.StrataAlgebra.irr"><code class="xref py py-meth docutils literal"><span class="pre">irr()</span></code></a>.</p>
 <p>You can construct an element using the matrix notation. Just pass a list of lists into your
 <code class="xref py py-class docutils literal"><span class="pre">StrataAlgebra</span></code>.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">var</span><span class="p">(</span><span class="s1">&#39;ps&#39;</span><span class="p">)</span> <span class="c1">#This is usually be done automatically, but we have to do it manually for the dotests to work.</span>
@@ -320,8 +320,8 @@ Compare the codimension 2 strata to our earlier example.</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <p><code class="xref py py-meth docutils literal"><span class="pre">StrataAlgebraElement.integrate()</span></code></p>
-<p><code class="xref py py-meth docutils literal"><span class="pre">betti()</span></code></p>
-<p class="last"><code class="xref py py-meth docutils literal"><span class="pre">FZ_betti()</span></code></p>
+<p><a class="reference internal" href="#strataalgebra.StrataAlgebra.betti" title="strataalgebra.StrataAlgebra.betti"><code class="xref py py-meth docutils literal"><span class="pre">betti()</span></code></a></p>
+<p class="last"><a class="reference internal" href="#strataalgebra.StrataAlgebra.FZ_betti" title="strataalgebra.StrataAlgebra.FZ_betti"><code class="xref py py-meth docutils literal"><span class="pre">FZ_betti()</span></code></a></p>
 </div>
 <dl class="method">
 <dt id="strataalgebra.StrataAlgebra.FZ_betti">
@@ -344,7 +344,7 @@ If the codimension is omited, return a list of all of them.</p>
 </div>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><code class="xref py py-meth docutils literal"><span class="pre">betti()</span></code></p>
+<p class="last"><a class="reference internal" href="#strataalgebra.StrataAlgebra.betti" title="strataalgebra.StrataAlgebra.betti"><code class="xref py py-meth docutils literal"><span class="pre">betti()</span></code></a></p>
 </div>
 </dd></dl>
 
@@ -367,7 +367,7 @@ If the codimension is omited, return a list of all of them.</p>
 output of Pixton&#8217;s original <cite>taurel.sage</cite> program.</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><code class="xref py py-meth docutils literal"><span class="pre">FZ_matrix_pushforward_basis()</span></code></p>
+<p class="last"><a class="reference internal" href="#strataalgebra.StrataAlgebra.FZ_matrix_pushforward_basis" title="strataalgebra.StrataAlgebra.FZ_matrix_pushforward_basis"><code class="xref py py-meth docutils literal"><span class="pre">FZ_matrix_pushforward_basis()</span></code></a></p>
 </div>
 </dd></dl>
 
@@ -434,7 +434,7 @@ This is useful for testing purposes.</p>
 </div>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><code class="xref py py-meth docutils literal"><span class="pre">MgnLb_class()</span></code></p>
+<p class="last"><a class="reference internal" href="#strataalgebra.StrataAlgebra.MgnLb_class" title="strataalgebra.StrataAlgebra.MgnLb_class"><code class="xref py py-meth docutils literal"><span class="pre">MgnLb_class()</span></code></a></p>
 </div>
 </dd></dl>
 
@@ -468,7 +468,7 @@ This is useful for testing purposes.</p>
 <code class="descname">betti</code><span class="sig-paren">(</span><em>codim=None</em><span class="sig-paren">)</span><a class="headerlink" href="#strataalgebra.StrataAlgebra.betti" title="Permalink to this definition">¶</a></dt>
 <dd><p>Give the number of basis elements in the Strata algebra for the given codimension.
 If the codimension is omitted, return a list of all of them.</p>
-<p>This is NOT the Betti numbers for the moduli space of curves! For that see <code class="xref py py-meth docutils literal"><span class="pre">FZ_betti()</span></code>.</p>
+<p>This is NOT the Betti numbers for the moduli space of curves! For that see <a class="reference internal" href="#strataalgebra.StrataAlgebra.FZ_betti" title="strataalgebra.StrataAlgebra.FZ_betti"><code class="xref py py-meth docutils literal"><span class="pre">FZ_betti()</span></code></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -561,10 +561,11 @@ This could take a long time for some rings.</p>
 <dt id="strataalgebra.StrataAlgebra.irr">
 <code class="descname">irr</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#strataalgebra.StrataAlgebra.irr" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make the irreducible boundary. It will be returned with a coefficient of 1/2.</p>
-<blockquote>
-<div>sage: s = StrataAlgebra(QQ, 1, (1,2))
-sage: s.irr()
-1/2*D_irr</div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">s</span> <span class="o">=</span> <span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="gp">sage: </span><span class="n">s</span><span class="o">.</span><span class="n">irr</span><span class="p">()</span>
+<span class="go">1/2*D_irr</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">

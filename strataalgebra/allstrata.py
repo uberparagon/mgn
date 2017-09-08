@@ -285,7 +285,7 @@ class StrataPyramid(UniqueRepresentation):
 
         .. SEEALSO ::
 
-            :meth:`~StrataAlgebra.FZ_matrix_pushforward_basis`
+            :meth:`~strataalgebra.StrataAlgebra.FZ_matrix_pushforward_basis`
 
 
         """

@@ -3,7 +3,7 @@ Installation
 
 The module is distributed on PyPI. You just need to run the following command: ::
 
-    $ sage -pip install mgn [--user]
+    $ sage -pip install mgn --user
 
 The –user option is optional and allows to install the module in your user space (and does not require administrator rights). 
 
@@ -21,9 +21,7 @@ The ``mgn`` package contains two modules for computations on the moduli space of
 strataalgebra
 --------------
 
-This module computes product in the strata algebra. It also contains some of A. Pixton's code to compute FZ relations. 
-
-`Read the detailed documentation`_.
+This module computes product in the strata algebra. It also contains some of A. Pixton's code to compute FZ relations. `Read the detailed documentation`_.
 
 .. _Read the detailed documentation: https://rawgit.com/uberparagon/mgn/master/strataalgebra/_build/html/index.html
 
