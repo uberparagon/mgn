@@ -5,13 +5,14 @@ try:
 except ImportError:
     print "WARNING: This package only works with SageMath."
 
+print "This is version 1.0.9"
 
 with open("README.rst") as f:
     long_description = f.read()
     
 setup(
     name='mgn',
-    version='1.0.3',
+    version='1.0.9',
     packages=['strataalgebra', 'topintersections'],
     url='https://github.com/uberparagon/mgn',
     download_url="https://github.com/uberparagon/mgn/releases/latest/",
