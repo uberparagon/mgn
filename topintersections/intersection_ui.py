@@ -36,8 +36,7 @@ def space(g,n, namespace = None, print_classes = True):
     INPUT:
      - ``g`` -- The genus.
      - ``n`` -- The number of marked points.
-     -  ``namespace`` -- (optional) The namespace that you would like the variable names defined in.  If you are running this program as main (you started it from the command line or used sage's load or attach, then it will automatically insert the variables in the global namespace without you using this option.
-     - ``print_classes`` -- (optional, defaults to True) Set this to false if you don't want to see a list of the classes    
+     - ``print_classes`` -- (optional, defaults to True) Set this to False if you don't want to see a list of the classes    
      
     This performs three functions:
         1.  It prints a list of classes and indexes for easy reference.
@@ -47,9 +46,7 @@ def space(g,n, namespace = None, print_classes = True):
     It also returns a Moduli space object, if you want to capture it.
     """
     global current_space
-    if namespace == None and __name__ == "__main__":
-        namespace = globals()
-    current_space = Mgn(g,n,globals())
+    current_space = Mgn(g,n,True)
     
     
     if print_classes:

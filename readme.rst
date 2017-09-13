@@ -28,7 +28,7 @@ To see if it is installed, try: ::
     
     sage: from strataalgebra import *
     sage: StrataAlgebra(QQ, 1, (1,2))
-    StrataAlgebra with genus 1 and markings (1, 2) over RationalField
+    Strata algebra with genus 1 and markings (1, 2) over Rational Field
     
 topintersections
 ----------------- 
@@ -49,4 +49,5 @@ To see if it is installed, try: ::
     [8]  la1
     Mbar_1_2
     sage: intnum(psi1*psi2)
+    Computing the intersection of psi1*psi2 over Mbar_1_2...
     1/24

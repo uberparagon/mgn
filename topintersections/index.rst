@@ -25,20 +25,6 @@ Installing and starting
 ``topintersections`` is now distributed as part of the ``mgn`` package on PyPI. `Click here`_ for installation instructions.
 
 .. _Click here: https://pypi.python.org/pypi/mgn/
-
-::
-
-    sage: print "hello world"
-    buzz off
-    
-Ok maybe its a problem with links
-
-.. link 
-
-::
-
-    sage: print "thats rude"
-    sorry
    
 Basic operation
 ================
@@ -70,8 +56,6 @@ You can use the space command to set the space you are working in. The first arg
     [10]  la1
     [11]  la2
     Mbar_2_1
-    sage: 1+1
-    432454355
 
 The class Dg1m1 is the class corresponding to the reducible boundary divisor where one component has genus 1 and the marked point 1. The class irr corresponds to the class of the irreducible boundary divisor. The classes psi, ka, ch, and la represent psi, kappa, chern character, and lambda classes respectively.
 
@@ -223,7 +207,7 @@ We can save this data to a file to avoid computing it over again in our next ses
 
 ::
 
-    sage: save_data("testsave.dat")
+    sage: save_data("testsave.dat", prompt = False)
     Save suceeded.
 
 If you don't specify a file name, the data is saved to the file ``mgn_top_intersect.dat``.

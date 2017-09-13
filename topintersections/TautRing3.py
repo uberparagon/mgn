@@ -12,12 +12,12 @@ class Mgn(object):
     
     Sometimes this is also used to represent the data associated to a reducible boundary divisor.  From one point of view, I think I regret that design decision, but I don't think it will affect performace or maintainability too much.
     """
-    def __init__(self, genus, marks, var_scope = None):
+    def __init__(self, genus, marks, make_vars = False):
         """
         INPUT:
          - genus
          - marks -- Either an integer, or a list or set of the labels for the marks
-         - var_scope -- A place to create the variables for classes on this space.  Mostly you would pass in globals(), I think.  If you omitt this argument, it doesn't create the variables.
+         - make_vars -- Set this to False if you don't want to make the varibles.
         """
         try:
             self.marks = frozenset(marks)
@@ -25,10 +25,11 @@ class Mgn(object):
             self.marks = frozenset(range(1, marks+1))
         self.genus = genus
         
-        if var_scope != None:
-            self.mak(var_scope)
+        if make_vars:
+            self.mak()
+
             
-        self.hash_value = hash(self.marks) + hash(self.genus)
+        self.hash_value = hash((self.marks,self.genus))
         #if 3*self.genus - 3 + self.n < 0:
         #    raise Exception, "No such space exists! g= " +str(genus) + " marks = " + str(marks)
         
@@ -147,13 +148,16 @@ class Mgn(object):
             
     print_classes = rij
             
-    def mak(self, where):
+    def mak(self):
         """
-        Creates symbols in the namespace ``where`` for all the classes on this space.  This makes it so you can type in e.g. psi1*ka2 and it knows what you mean.
+        Creates symbols in the global namespace for all the classes on this space.  This makes it so you can type in e.g. psi1*ka2 and it knows what you mean.
         """
-        for long_name_for_class_that_probably_wont_be_in_global_namespace in self.classes:
-            if long_name_for_class_that_probably_wont_be_in_global_namespace != 0:
-                exec(repr(long_name_for_class_that_probably_wont_be_in_global_namespace) + " = long_name_for_class_that_probably_wont_be_in_global_namespace", locals(), where)
+        #print "entering mak!!!"
+        for cl in self.classes:
+            sage.misc.misc.inject_variable(repr(cl),cl, warn=False)
+        #for long_name_for_class_that_probably_wont_be_in_global_namespace in self.classes:
+            #if long_name_for_class_that_probably_wont_be_in_global_namespace != 0:
+                #exec(repr(long_name_for_class_that_probably_wont_be_in_global_namespace) + " = long_name_for_class_that_probably_wont_be_in_global_namespace", locals(), where)
             
     def red_boundaries_as_spaces(self):
         """

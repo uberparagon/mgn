@@ -76,7 +76,21 @@ class StrataAlgebraElement(CommutativeAlgebraElement):
         
             sage: from strataalgebra import *
             sage: s = StrataAlgebra(QQ,1,(1,2))
-            sage: s.psi(1
+            sage: (s.psi(1)*s.psi(2)).integrate()
+            1/24
+            sage: s.kappa(2).integrate()
+            1/24
+            sage: s.get_stratum(2,0) #just so you can see it.
+            [0 1 2 0 0]
+            [0 0 0 2 1]
+            [0 1 1 0 1]
+            sage: s(2,0).integrate()
+            1
+            sage: s(1,2).integrate()
+            0
+            sage: (42*s(2,0) + s(1,1) + 48*s.kappa(2)).integrate()
+            44    
+        
          
         """
         result = 0
