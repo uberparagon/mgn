@@ -6,8 +6,9 @@ You can change which pairs you want to check by modifying the ``g_n_pairs_to_che
 ::
 
     sage: import strataalgebra.tests as tests
-    sage: tests.run() # long time
+    sage: tests.run() # not tested
 
+The comment is there so that the doctests don't try to run it.
 """
 
 from sage.all import QQ, floor, WeightedIntegerVectors, subsets

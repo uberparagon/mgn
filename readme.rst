@@ -38,18 +38,15 @@ This module computes top intersections. `Read the documentation <https://rawgit.
 To see if it is installed, try: ::
     
     sage: from topintersections import *
-    ***************************************************************************
-    Welcome to the intersection number computer for the moduli space of curves!
-
-    Written by Drew Johnson, based on Carel Faber's exposition and Maple code.
- 
-    The main commands are "intnum" to compute the intersection number, and 
-    "space" to select the space.  Type help(intnum) or help(space) for more 
-    information.
- 
-    Type save_data("filename") to save the results computed this session and 
-    load_data("filname") to retrieve previously saved data.  The default filename is 
-    "mgn_top_intersect.dat" if not specified.
-
-    Ctrl-D to quit.
-    ***************************************************************************
+    sage: space(1, 2)
+    [1]  psi1
+    [2]  psi2
+    [3]  ka1
+    [4]  ka2
+    [5]  ch1
+    [6]  irr
+    [7]  Dg0m1_2
+    [8]  la1
+    Mbar_1_2
+    sage: intnum(psi1*psi2)
+    1/24

@@ -13,7 +13,8 @@ except ImportError:
 default_file = "mgn_top_intersect.dat"
 import sys
 #if len(sys.argv) >= 2 and sys.argv[1] == "-i":        #Print this message if you load from interactive sage.
-print """***************************************************************************
+if False: #don't print this message any more
+    print """***************************************************************************
 Welcome to the intersection number computer for the moduli space of curves!
 
 Written by Drew Johnson, based on Carel Faber's exposition and Maple code.

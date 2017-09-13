@@ -67,6 +67,18 @@ class StrataAlgebraElement(CommutativeAlgebraElement):
             raise Exception("Tried to divide by {0}. Such division not possible!".format(other))
 
     def integrate(self):
+        """
+        Return the integral of this class, i.e. its degree in the top codimension.
+        
+        Classes of codimension less that the dimension of the moduli space will integrate to 0.
+        
+        This uses the FZ relations to perform the integration. It is probably not very efficient. But it provides a nice check of the implementation. Consider using the `topintersections` module if you need to compute something quickly. ::
+        
+            sage: from strataalgebra import *
+            sage: s = StrataAlgebra(QQ,1,(1,2))
+            sage: s.psi(1
+         
+        """
         result = 0
         ints = self.parent().basis_integrals()
         for (codim,index), coef in self.coef_dict.items():
@@ -76,7 +88,7 @@ class StrataAlgebraElement(CommutativeAlgebraElement):
 
     def dict(self):
         """
-        Return a dictionary with keys as StrataGraph objects and values as the coefficient of that stratum in this element.
+        Return a dictionary with keys as StrataGraph objects and values as the coefficient of that stratum in this element. ::
 
             sage: from strataalgebra import *
             sage: s = StrataAlgebra(QQ,1,(1,2,3)); s
@@ -123,10 +135,10 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
         r"""
         A ring representing the Strata algebra.
 
-        :param Ring base: The ring of coefficients you want to work over, usually `QQ`.
+        :param Ring base: The ring of coefficients you want to work over, usually ``QQ``.
         :param int g: The genus.
-        :param tuple markings: The markings. They should be positive integers. Repeats are allowed. Defaults to no markings.
-        :param bool make_vars: Defaults to True. If True, creates variables ps, ps2, ka1, ... , ka{d} (where d is the dimension of the moduli space) that can be used to create basis elements.
+        :param tuple markings: The markings should be positive integers. Repeats are allowed. Defaults to no markings.
+        :param bool make_vars: Defaults to True. If True, creates variables ``ps``, ``ps_``, ``ka1``, ... , ``ka{d}`` (where d is the dimension of the moduli space) that can be used to create basis elements.
             
         First import the module: ::
         
@@ -137,7 +149,7 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
             sage: SA = StrataAlgebra(QQ,1,(1,2)); SA
             Strata algebra with genus 1 and markings (1, 2) over Rational Field
 
-        Print the basis in a certain codimension ::
+        Print the basis elements in a certain codimension, with their (arbitrary) index: ::
 
             sage: SA.print_strata(2)
             **** i: 0
@@ -207,15 +219,15 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
         The constant term in the entry in the first column is the genus.
         The kappa classes also appear in the first column.
         Each column beyond the first corresponds to an edge or a half edge.
-        The entry in the first row gives the label of the half edge, or 0 for a full edge.
+        The entry in the first row gives the label of the half edge, or ``0`` for a full edge.
         The constant term of the entry in location (v,e) gives the number of times (0, 1, or 2) that edge e touches vertex v.
-        A `ps` in entry (v,e) means a :math:`\psi`-class associated to the half edge coming out of v.
-        A `ps_` may occur when there is a loop at the vertex.
+        A ``ps`` in entry (v,e) means a :math:`\psi`-class associated to the half edge coming out of v.
+        A ``ps_`` may occur when there is a loop at the vertex.
         The entry in the top left is just padding.
 
         To create classes, you can use their codimension and index.
         Boundary strata and psi-kappa monomials are represented by their special names,
-        and the rest are represented by `s_{codim},{index}` ::
+        and the rest are represented by ``s_{codim},{index}`` ::
 
             sage: a = SA(2, 1); a
             s_2,1
@@ -243,15 +255,14 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
         You can construct :math:`\psi,\;\kappa` monomials and boundary divisors with the methods :meth:`~strataalgebra.StrataAlgebra.kappa`, :meth:`~strataalgebra.StrataAlgebra.psi`,
         :meth:`~strataalgebra.StrataAlgebra.boundary`, and :meth:`~strataalgebra.StrataAlgebra.irr`.
 
-        You can construct an element using the matrix notation. Just pass a list of lists into your
-        :class:`StrataAlgebra`. ::
-
-            sage: var('ps') #This is usually be done automatically, but we have to do it manually for the dotests to work.
+        You can construct an element using the matrix notation. Just pass a list of lists into your :class:`StrataAlgebra`. ::
+        
+            sage: var('ps') #This is usually done automatically, but we have to do it manually here for the dotests to work.
             ps
             sage: SA([[0,1,2,0],[1,0,0,ps+1],[0,1,1,1]])
             s_2,7
 
-        Here is an example of the `ps_`: ::
+        Here is an example of the ``ps_``: ::
 
             sage: s = StrataAlgebra(QQ,2,())
             sage: s.get_stratum(3,9)
@@ -369,17 +380,6 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
             **** i: 11
             ps1*ps1
             <BLANKLINE>
-
-
-
-        .. SEEALSO::
-        
-            :meth:`strataalgebra.StrataAlgebraElement.integrate`
-
-            :meth:`~strataalgebra.StrataAlgebra.betti`
-
-            :meth:`~strataalgebra.StrataAlgebra.FZ_betti`
-
         """
     
         if base not in CommutativeRings():
@@ -473,8 +473,8 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
         """
         for r1 in range(1, self.moduli_dim):
             for r2 in range(1, self.moduli_dim-r1+1):
-                for i in range(self.betti(r1)):
-                    for j in range(self.betti(r2)):
+                for i in range(self.hilbert(r1)):
+                    for j in range(self.hilbert(r2)):
                         print "******** doing", (r1,i),(r2,j)
                         self._prod((r1, i), (r2, j))
         
@@ -798,7 +798,7 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
         """
         Computes an integral of boundary divisors, kappa classes, and psi classes.
 
-        :param index_list: A list of indices of classes, according the the scheme of Carl Faber's MgnLb Maple program. This function is useful because so you can test our implementation of the product and the FZ_relations.
+        :param index_list: A list of indices of classes, according the the scheme of Carl Faber's ``MgnLb`` Maple program. This function is useful because so you can test our implementation of the product and the FZ_relations.
         :rtype: `Rational`
 
         Examples: ::
@@ -821,7 +821,7 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
         
     def MgnLb_class(self,index):
         """
-        Returns the class corresponding to the index from Carl Faber's Mgn_Lb Maple program.
+        Returns the class corresponding to the index from Carl Faber's ``MgnLb`` Maple program.
         This is useful for testing purposes. ::
 
             sage: from strataalgebra import *
@@ -870,9 +870,9 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
             
         return self.boundary(*reducible_boundaries[index-1])   
         
-    def betti(self, codim = None):
+    def hilbert(self, codim = None):
         """
-        Give the number of basis elements in the Strata algebra for the given codimension.
+        Give the number of basis elements in the Strata algebra for the given codimension (the Hilbert function).
         If the codimension is omitted, return a list of all of them.
 
         This is NOT the Betti numbers for the moduli space of curves! For that see :meth:`~strataalgebra.StrataAlgebra.FZ_betti`.
@@ -882,9 +882,9 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
         ::
 
             sage: from strataalgebra import *
-            sage: StrataAlgebra(QQ, 2, (1,)).betti()
+            sage: StrataAlgebra(QQ, 2, (1,)).hilbert()
             [1, 4, 17, 49, 92]
-            sage: StrataAlgebra(QQ, 2, (1,)).betti(2)
+            sage: StrataAlgebra(QQ, 2, (1,)).hilbert(2)
             17
 
 
@@ -895,7 +895,7 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
 
     def FZ_betti(self, codim = None):
         """
-        Give the dimension of the cohomology of moduli space of curves, as predicted by the Faber-Zagier-Pixton relations.
+        Give the dimension of the cohomology of moduli space of curves, as predicted by the Faber-Zagier relations.
         If the codimension is omited, return a list of all of them.
 
         :param codim: Optional. The codimension you want.
@@ -909,7 +909,7 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
             5
 
         .. SEEALSO ::
-            :meth:`~strataalgebra.StrataAlgebra.betti`
+            :meth:`~strataalgebra.StrataAlgebra.hilbert`
 
         """
         if codim is None:

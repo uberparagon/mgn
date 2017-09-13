@@ -156,7 +156,7 @@ class StrataPyramid(UniqueRepresentation):
         :param j: The index
         :rtype: :class:`StrataGraph`
 
-        See :class:`StrataAlgebra` documentation for examples.
+        See :class:`~strataalgebra.StrataAlgebra` documentation for examples.
         """
         if self._dstrata[r] is None:
             self.build_decorations(r)
@@ -165,10 +165,11 @@ class StrataPyramid(UniqueRepresentation):
     def print_strata(self,r):
         """
         Print all the strata, with their indexes, in codimension `r`.
+        
         :param r: The codimension
         :return: None
 
-        See :class:`StrataAlgebra` documentation for examples.
+        See :class:`~strataalgebra.StrataAlgebra` documentation for examples.
         """
         if self._dstrata[r] is None:
             self.build_decorations(r)
@@ -273,15 +274,15 @@ class StrataPyramid(UniqueRepresentation):
     
     def FZ_matrix(self,r):
         """
-        Return the matrix of Faber-Zagier-Pixton relations.
+        Return the matrix of Faber-Zagier relations.
 
-        :param r:
+        :param r: The codimension.
         :rtype: :class:`Matrix`
 
         The columns correspond to the basis elements of the Strata algebra, and each row is a relation.
 
         Notice that this matrix considers the kappa classes to be in the monomial basis. Thus, is different than the
-        output of Pixton's original `taurel.sage` program.
+        output of Pixton's original ``taurel.sage`` program.
 
         .. SEEALSO ::
 
@@ -293,14 +294,18 @@ class StrataPyramid(UniqueRepresentation):
 
     def FZ_matrix_pushforward_basis(self,r):
         """
-        Return the matrix of Faber-Zagier-Pixton relations, using the "pushforward" basis, NOT the kappa monomial basis
+        Return the matrix of Faber-Zagier relations, using the "pushforward" basis, NOT the kappa monomial basis
         that the rest of the code uses.
 
-        :param r:
+        :param r: The codimension.
         :rtype: :class:`Matrix`
 
         The columns correspond to the basis elements of the Strata algebra, and each row is a relation.
-        This matrix should be the same as Pixton's original `tautrel.sage` program after permuting columns.
+        This matrix should be the same as Pixton's original ``tautrel.sage`` program after permuting columns.
+        
+        .. SEEALSO ::
+
+            :meth:`~strataalgebra.StrataAlgebra.FZ_matrix`
         """
         return Matrix(self.list_all_FZ(r))
 
