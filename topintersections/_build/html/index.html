@@ -56,29 +56,14 @@
 </div>
 <div class="section" id="installing-and-starting">
 <h1>Installing and starting<a class="headerlink" href="#installing-and-starting" title="Permalink to this headline">¶</a></h1>
-<p><code class="docutils literal"><span class="pre">topintersections</span></code> is now distributed as part of the <code class="docutils literal"><span class="pre">mgn</span></code> package. <a class="reference external" href="https://github.com/uberparagon/mgn">Click here</a> for installation instructions or to see the source code.</p>
-<p>After installing, load the code in a sage session. If it is installed, you will get a welcome message.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">topintersections</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="go">***************************************************************************</span>
-<span class="go">Welcome to the intersection number computer for the moduli space of curves!</span>
-
-<span class="go">Written by Drew Johnson, based on Carel Faber&#39;s exposition and Maple code.</span>
-
-<span class="go">The main commands are &quot;intnum&quot; to compute the intersection number, and</span>
-<span class="go">&quot;space&quot; to select the space.  Type help(intnum) or help(space) for more</span>
-<span class="go">information.</span>
-
-<span class="go">Type save_data(&quot;filename&quot;) to save the results computed this session and</span>
-<span class="go">load_data(&quot;filname&quot;) to retrieve previously saved data.  The default filename is</span>
-<span class="go">&quot;mgn_top_intersect.dat&quot; if not specified.</span>
-
-<span class="go">Ctrl-D to quit.</span>
-<span class="go">***************************************************************************</span>
-</pre></div>
-</div>
+<p><code class="docutils literal"><span class="pre">topintersections</span></code> is now distributed as part of the <code class="docutils literal"><span class="pre">mgn</span></code> package on PyPI. <a class="reference external" href="https://pypi.python.org/pypi/mgn/">Click here</a> for installation instructions.</p>
 </div>
 <div class="section" id="basic-operation">
 <h1>Basic operation<a class="headerlink" href="#basic-operation" title="Permalink to this headline">¶</a></h1>
+<p>Start a sage session and import the module:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">topintersections</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
 <p>You can use the space command to set the space you are working in. The first argument is the genus, and the last is the number of marked points. The space command does three things:</p>
 <blockquote>
 <div><ol class="arabic simple">
@@ -87,30 +72,132 @@
 <li>It injects the variables names into your namespace so you can use them to make polynomials.</li>
 </ol>
 </div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">space</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">[1]  psi1</span>
+<span class="go">[2]  ka1</span>
+<span class="go">[3]  ka2</span>
+<span class="go">[4]  ka3</span>
+<span class="go">[5]  ka4</span>
+<span class="go">[6]  ch1</span>
+<span class="go">[7]  ch3</span>
+<span class="go">[8]  irr</span>
+<span class="go">[9]  Dg1m1</span>
+<span class="go">[10]  la1</span>
+<span class="go">[11]  la2</span>
+<span class="go">Mbar_2_1</span>
+</pre></div>
+</div>
 <p>The class Dg1m1 is the class corresponding to the reducible boundary divisor where one component has genus 1 and the marked point 1. The class irr corresponds to the class of the irreducible boundary divisor. The classes psi, ka, ch, and la represent psi, kappa, chern character, and lambda classes respectively.</p>
 <p>Now we are ready to compute some things. You can type in a polynomial in the classes given by the space command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">intnum</span><span class="p">(</span><span class="n">irr</span><span class="o">^</span><span class="mi">3</span><span class="o">*</span><span class="n">psi1</span><span class="p">)</span>
+<span class="go">Computing the intersection of irr^3*psi1 over Mbar_2_1...</span>
+<span class="go">-11/6</span>
+<span class="gp">sage: </span><span class="n">intnum</span><span class="p">(</span><span class="n">ka2</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">Computing the intersection of ka2^2 over Mbar_2_1...</span>
+<span class="go">53/5760</span>
+<span class="gp">sage: </span><span class="n">intnum</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">irr</span><span class="o">^</span><span class="mi">3</span><span class="o">*</span><span class="n">psi1</span> <span class="o">+</span> <span class="mi">6</span><span class="o">*</span><span class="n">ka2</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">Computing the intersection of 3*irr^3*psi1 + 6*ka2^2 over Mbar_2_1...</span>
+<span class="go">-5227/960</span>
+</pre></div>
+</div>
 <p>If you are just computing a monomial with no coefficient, you can pass in the indexes as a list. Thus, the following command computes the same number as the first example above.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">intnum</span><span class="p">([</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="go">Computing the intersection of irr^3*psi1 over Mbar_2_1...</span>
+<span class="go">-11/6</span>
+</pre></div>
+</div>
 <p>You can also specify the space you wish to work over in the function call. Any classes that are in the namespace will be interpreted as being in the space you specified. For example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">intnum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">psi1</span><span class="o">^</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">Computing the intersection of psi1^5 over Mbar_2_2...</span>
+<span class="go">1/1152</span>
+</pre></div>
+</div>
 <p>The following syntax should be very similar to Carel Faber&#8217;s MgnLb.txt Maple program:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">intnum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="go">Computing the intersection of psi1^5 over Mbar_2_2...</span>
+<span class="go">1/1152</span>
+</pre></div>
+</div>
 <p>However, in order to type in a polynomial in classes, the names must have been created by a previous space command. Thus, if you have not called space with marked points at least 2 in this session, the following will give an error:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">intnum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">psi1</span><span class="o">*</span><span class="n">psi2</span><span class="o">^</span><span class="mi">4</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="gr">NameError</span>: <span class="n">name &#39;psi2&#39; is not defined</span>
+</pre></div>
+</div>
 <p>Instead, do something like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">space</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">[1]  psi1</span>
+<span class="go">[2]  psi2</span>
+<span class="go">[3]  ka1</span>
+<span class="go">[4]  ka2</span>
+<span class="go">[5]  ka3</span>
+<span class="go">[6]  ka4</span>
+<span class="go">[7]  ka5</span>
+<span class="go">[8]  ch1</span>
+<span class="go">[9]  ch3</span>
+<span class="go">[10]  irr</span>
+<span class="go">[11]  Dg0m1_2</span>
+<span class="go">[12]  Dg1m1</span>
+<span class="go">[13]  Dg1m1_2</span>
+<span class="go">[14]  la1</span>
+<span class="go">[15]  la2</span>
+<span class="go">Mbar_2_2</span>
+<span class="gp">sage: </span><span class="n">intnum</span><span class="p">(</span><span class="n">psi1</span><span class="o">*</span><span class="n">psi2</span><span class="o">^</span><span class="mi">4</span><span class="p">)</span>
+<span class="go">Computing the intersection of psi1*psi2^4 over Mbar_2_2...</span>
+<span class="go">1/384</span>
+</pre></div>
+</div>
 <p>If the degree is not correct, you will know. (The code only computes top intersections.)</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">intnum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">psi1</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">Computing the intersection of psi1^2 over Mbar_2_2...</span>
+<span class="go">The monomial psi1^2 has degree 2, while the space Mbar_2_2 has dimension 5.</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="some-more-examples">
 <h1>Some more examples<a class="headerlink" href="#some-more-examples" title="Permalink to this headline">¶</a></h1>
 <p>Here are some of the intersection numbers from Faber&#8217;s paper:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">intnum</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="n">irr</span><span class="o">^</span><span class="mi">9</span><span class="p">)</span>
+<span class="go">Computing the intersection of irr^9 over Mbar_4_0...</span>
+<span class="go">-251987683/4320</span>
+<span class="gp">sage: </span><span class="n">intnum</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="n">la1</span><span class="o">^</span><span class="mi">9</span><span class="p">)</span>
+<span class="go">Computing the intersection of la1^9 over Mbar_4_0...</span>
+<span class="go">1/113400</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="options">
 <h1>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h1>
 <p>You can suppress the helpful message that tells you what you are computing using the <code class="docutils literal"><span class="pre">confirm</span></code> keyword argument.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">intnum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">psi1</span><span class="o">^</span><span class="mi">5</span><span class="p">,</span> <span class="n">confirm</span> <span class="o">=</span> <span class="bp">False</span><span class="p">)</span>
+<span class="go">1/1152</span>
+</pre></div>
+</div>
 <p>You can have the program return zero if the degree is wrong instead of raising an exception by using the <code class="docutils literal"><span class="pre">check_degree</span></code> keyword argument.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">intnum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">psi1</span><span class="o">^</span><span class="mi">2</span><span class="p">,</span> <span class="n">check_degree</span> <span class="o">=</span> <span class="bp">False</span><span class="p">)</span>
+<span class="go">Computing the intersection of psi1^2 over Mbar_2_2...</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="saving-and-loading">
 <h1>Saving and loading<a class="headerlink" href="#saving-and-loading" title="Permalink to this headline">¶</a></h1>
 <p>So far we have computed numbers from scratch. The program automatically saves any answers that it has computed in this session, including numbers computed in recursion steps. For example, if you computed the example <code class="docutils literal"><span class="pre">la1^9</span></code> above, you probably noticed that it took a few seconds. If we compute it again, it will be really fast because the program just looks it up in a dictionary.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">timeit</span><span class="p">(</span><span class="s2">&quot;intnum(4,0, la1^9)&quot;</span><span class="p">,</span> <span class="n">number</span> <span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">repeat</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="c1">#random</span>
+<span class="go">1 loops, best of 1: 7.06 ms per loop</span>
+</pre></div>
+</div>
 <p>We can save this data to a file to avoid computing it over again in our next session.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">save_data</span><span class="p">(</span><span class="s2">&quot;testsave.dat&quot;</span><span class="p">,</span> <span class="n">prompt</span> <span class="o">=</span> <span class="bp">False</span><span class="p">)</span>
+<span class="go">Save suceeded.</span>
+</pre></div>
+</div>
 <p>If you don&#8217;t specify a file name, the data is saved to the file <code class="docutils literal"><span class="pre">mgn_top_intersect.dat</span></code>.</p>
 <p>To load a previously saved data file, use the following command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="n">load_data</span><span class="p">(</span><span class="s2">&quot;testsave.dat&quot;</span><span class="p">)</span>
+<span class="go">Data loaded.</span>
+</pre></div>
+</div>
 </div>
 
 

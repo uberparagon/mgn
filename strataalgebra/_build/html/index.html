@@ -52,7 +52,7 @@
 <div class="section" id="strataalgebra-documentation">
 <h1>strataalgebra Documentation<a class="headerlink" href="#strataalgebra-documentation" title="Permalink to this headline">¶</a></h1>
 <p>Welcome! The <code class="docutils literal"><span class="pre">strataalgebra</span></code> module is designed to compute products in the strata algebra using <a class="reference external" href="sagemath.org">Sage</a>. The strata algebra is of interest
-because it has a natural surjective morphism to the tautological ring of the moduli space of curves. The kernel is (conjecturally) described by the Faber-Zagier relations. For more detail, see for example R. <a class="reference external" href="https://arxiv.org/pdf/1603.05151.pdf">Pandharipande&#8217;s exposition</a>.</p>
+because it has a natural surjective morphism to the tautological ring of the moduli space of curves. The kernel is (conjecturally) described by the Faber-Zagier relations. For more detail, see for example <a class="reference external" href="https://arxiv.org/pdf/1603.05151.pdf">R. Pandharipande&#8217;s exposition</a>.</p>
 <p>The product structure was implemented by <a class="reference external" href="http://pages.uoregon.edu/drewj/">Drew Johnson</a>, based on <a class="reference external" href="https://arxiv.org/abs/0808.1974">S. Yang&#8217;s note</a> describing the algorithm of Graber and
 Pandharipande.
 The program also computes the FZ relations using code copied from A. Pixton&#8217;s <a class="reference external" href="http://math.mit.edu/~apixton/programs/tautrel.sage">tautrel.sage</a> program.
@@ -61,7 +61,7 @@ The code was integrated into this package (with some modifications and optimizat
 </div>
 <div class="section" id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
-<p>Installation should be (hopefully) easy. <code class="docutils literal"><span class="pre">strataalgebra</span></code> is distributed as part of the <a class="reference external" href="https://pypi.python.org/pypi/mgn/">mgn package</a>.</p>
+<p>Installation should be (hopefully) easy. <code class="docutils literal"><span class="pre">strataalgebra</span></code> is distributed as part of the <code class="docutils literal"><span class="pre">mgn</span></code> package on PyPI. <a class="reference external" href="https://pypi.python.org/pypi/mgn/">Click here</a> for installation instructions.</p>
 <p>Once it is installed, you can load it in a sage session by typing:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">strataalgebra</span> <span class="kn">import</span> <span class="o">*</span>
 </pre></div>
@@ -320,14 +320,10 @@ Compare the codimension 2 strata to our earlier example.</p>
 <span class="go">ps1*ps1</span>
 </pre></div>
 </div>
-<div class="admonition seealso">
-<p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="#strataalgebra.StrataAlgebraElement.integrate" title="strataalgebra.StrataAlgebraElement.integrate"><code class="xref py py-meth docutils literal"><span class="pre">integrate()</span></code></a>, <a class="reference internal" href="#strataalgebra.StrataAlgebra.betti" title="strataalgebra.StrataAlgebra.betti"><code class="xref py py-meth docutils literal"><span class="pre">betti()</span></code></a>, <a class="reference internal" href="#strataalgebra.StrataAlgebra.FZ_betti" title="strataalgebra.StrataAlgebra.FZ_betti"><code class="xref py py-meth docutils literal"><span class="pre">FZ_betti()</span></code></a></p>
-</div>
 <dl class="method">
 <dt id="strataalgebra.StrataAlgebra.FZ_betti">
 <code class="descname">FZ_betti</code><span class="sig-paren">(</span><em>codim=None</em><span class="sig-paren">)</span><a class="headerlink" href="#strataalgebra.StrataAlgebra.FZ_betti" title="Permalink to this definition">¶</a></dt>
-<dd><p>Give the dimension of the cohomology of moduli space of curves, as predicted by the Faber-Zagier-Pixton relations.
+<dd><p>Give the dimension of the cohomology of moduli space of curves, as predicted by the Faber-Zagier relations.
 If the codimension is omited, return a list of all of them.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -346,7 +342,7 @@ If the codimension is omited, return a list of all of them.</p>
 </div>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="#strataalgebra.StrataAlgebra.betti" title="strataalgebra.StrataAlgebra.betti"><code class="xref py py-meth docutils literal"><span class="pre">betti()</span></code></a></p>
+<p class="last"><a class="reference internal" href="#strataalgebra.StrataAlgebra.hilbert" title="strataalgebra.StrataAlgebra.hilbert"><code class="xref py py-meth docutils literal"><span class="pre">hilbert()</span></code></a></p>
 </div>
 </dd></dl>
 
@@ -390,6 +386,10 @@ that the rest of the code uses.</p>
 </table>
 <p>The columns correspond to the basis elements of the Strata algebra, and each row is a relation.
 This matrix should be the same as Pixton&#8217;s original <code class="docutils literal"><span class="pre">tautrel.sage</span></code> program after permuting columns.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#strataalgebra.StrataAlgebra.FZ_matrix" title="strataalgebra.StrataAlgebra.FZ_matrix"><code class="xref py py-meth docutils literal"><span class="pre">FZ_matrix()</span></code></a></p>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -445,7 +445,7 @@ This is useful for testing purposes.</p>
 <dl class="attribute">
 <dt id="strataalgebra.StrataAlgebra.basis_integrals">
 <code class="descname">basis_integrals</code><a class="headerlink" href="#strataalgebra.StrataAlgebra.basis_integrals" title="Permalink to this definition">¶</a></dt>
-<dd><p>File: /Users/drewjohnson/mgn/strataalgebra/strataalgebra.py (starting at line 415)</p>
+<dd><p>File: /Users/drewjohnson/mgn/strataalgebra/strataalgebra.py (starting at line 431)</p>
 <p>Return a list of numbers corresponding to the integrals of the basis elements in the top codimension.</p>
 <p>This is computed via the FZ relations, so it is probably not fast. However, it is a nice check.</p>
 <p>The value is cached, so you only have to compute it once per session.</p>
@@ -464,29 +464,6 @@ This is useful for testing purposes.</p>
 
 <span class="gp">sage: </span><span class="n">s</span><span class="o">.</span><span class="n">basis_integrals</span><span class="p">()</span>
 <span class="go">[1, 1/24, 1/24]</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="method">
-<dt id="strataalgebra.StrataAlgebra.betti">
-<code class="descname">betti</code><span class="sig-paren">(</span><em>codim=None</em><span class="sig-paren">)</span><a class="headerlink" href="#strataalgebra.StrataAlgebra.betti" title="Permalink to this definition">¶</a></dt>
-<dd><p>Give the number of basis elements in the Strata algebra for the given codimension.
-If the codimension is omitted, return a list of all of them.</p>
-<p>This is NOT the Betti numbers for the moduli space of curves! For that see <a class="reference internal" href="#strataalgebra.StrataAlgebra.FZ_betti" title="strataalgebra.StrataAlgebra.FZ_betti"><code class="xref py py-meth docutils literal"><span class="pre">FZ_betti()</span></code></a>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>codim</strong> (<em>int</em>) &#8211; Optional. The codimension you want.</td>
-</tr>
-</tbody>
-</table>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">strataalgebra</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="gp">sage: </span><span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,))</span><span class="o">.</span><span class="n">betti</span><span class="p">()</span>
-<span class="go">[1, 4, 17, 49, 92]</span>
-<span class="gp">sage: </span><span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,))</span><span class="o">.</span><span class="n">betti</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="go">17</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -563,6 +540,29 @@ This could take a long time for some rings.</p>
 </tbody>
 </table>
 <p>See <a class="reference internal" href="#strataalgebra.StrataAlgebra" title="strataalgebra.StrataAlgebra"><code class="xref py py-class docutils literal"><span class="pre">StrataAlgebra</span></code></a> documentation for examples.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="strataalgebra.StrataAlgebra.hilbert">
+<code class="descname">hilbert</code><span class="sig-paren">(</span><em>codim=None</em><span class="sig-paren">)</span><a class="headerlink" href="#strataalgebra.StrataAlgebra.hilbert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Give the number of basis elements in the Strata algebra for the given codimension (the Hilbert function).
+If the codimension is omitted, return a list of all of them.</p>
+<p>This is NOT the Betti numbers for the moduli space of curves! For that see <a class="reference internal" href="#strataalgebra.StrataAlgebra.FZ_betti" title="strataalgebra.StrataAlgebra.FZ_betti"><code class="xref py py-meth docutils literal"><span class="pre">FZ_betti()</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>codim</strong> (<em>int</em>) &#8211; Optional. The codimension you want.</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">strataalgebra</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">sage: </span><span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,))</span><span class="o">.</span><span class="n">hilbert</span><span class="p">()</span>
+<span class="go">[1, 4, 17, 49, 92]</span>
+<span class="gp">sage: </span><span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,))</span><span class="o">.</span><span class="n">hilbert</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">17</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -696,7 +696,27 @@ This could take a long time for some rings.</p>
 <dl class="method">
 <dt id="strataalgebra.StrataAlgebraElement.integrate">
 <code class="descclassname">StrataAlgebraElement.</code><code class="descname">integrate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#strataalgebra.StrataAlgebraElement.integrate" title="Permalink to this definition">¶</a></dt>
-<dd><p>TODO</p>
+<dd><p>Return the integral of this class, i.e. its degree in the top codimension.</p>
+<p>Classes of codimension less that the dimension of the moduli space will integrate to 0.</p>
+<p>This uses the FZ relations to perform the integration. It is probably not very efficient. But it provides a nice check of the implementation. Consider using the <cite>topintersections</cite> module if you need to compute something quickly.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">strataalgebra</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">sage: </span><span class="n">s</span> <span class="o">=</span> <span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span><span class="mi">1</span><span class="p">,(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="gp">sage: </span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">psi</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">s</span><span class="o">.</span><span class="n">psi</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span><span class="o">.</span><span class="n">integrate</span><span class="p">()</span>
+<span class="go">1/24</span>
+<span class="gp">sage: </span><span class="n">s</span><span class="o">.</span><span class="n">kappa</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">integrate</span><span class="p">()</span>
+<span class="go">1/24</span>
+<span class="gp">sage: </span><span class="n">s</span><span class="o">.</span><span class="n">get_stratum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="c1">#just so you can see it.</span>
+<span class="go">[0 1 2 0 0]</span>
+<span class="go">[0 0 0 2 1]</span>
+<span class="go">[0 1 1 0 1]</span>
+<span class="gp">sage: </span><span class="n">s</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">integrate</span><span class="p">()</span>
+<span class="go">1</span>
+<span class="gp">sage: </span><span class="n">s</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">integrate</span><span class="p">()</span>
+<span class="go">0</span>
+<span class="gp">sage: </span><span class="p">(</span><span class="mi">42</span><span class="o">*</span><span class="n">s</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">s</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">48</span><span class="o">*</span><span class="n">s</span><span class="o">.</span><span class="n">kappa</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span><span class="o">.</span><span class="n">integrate</span><span class="p">()</span>
+<span class="go">44    </span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -720,9 +740,11 @@ This could take a long time for some rings.</p>
 <p>The <code class="docutils literal"><span class="pre">tests</span></code> module tests the implementation of the product and the FZ relations by comparing them to the <code class="docutils literal"><span class="pre">topintersections</span></code> code.</p>
 <p>You can change which pairs you want to check by modifying the <code class="docutils literal"><span class="pre">g_n_pairs_to_check</span> <span class="pre">variable</span></code> in the source code <code class="docutils literal"><span class="pre">tests.py</span></code>.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">import</span> <span class="nn">strataalgebra.tests</span> <span class="kn">as</span> <span class="nn">tests</span>
-<span class="gp">sage: </span><span class="n">tests</span><span class="o">.</span><span class="n">run</span><span class="p">()</span> <span class="c1"># long time</span>
+<span class="gp">sage: </span><span class="n">tests</span><span class="o">.</span><span class="n">run</span><span class="p">()</span> <span class="c1"># not tested</span>
 </pre></div>
 </div>
+<p>The comment is there so that the doctests don&#8217;t try to run it.</p>
+<p>You can also test the examples from this file using Sage&#8217;s doctest.</p>
 </div>
 <div class="section" id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
