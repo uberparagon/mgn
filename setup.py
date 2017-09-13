@@ -1,3 +1,5 @@
+# nodoctest
+
 from distutils.core import setup
 
 try:
