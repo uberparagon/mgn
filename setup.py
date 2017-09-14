@@ -2,21 +2,24 @@
 
 from distutils.core import setup
 
-from conf import release
+
 
 try:
     from sage.env import SAGE_SRC, SAGE_VERSION
 except ImportError:
-    print "WARNING: This package only works with SageMath."
+    import warnings
+    warnings.warn("This package only works with SageMath!")
 
-print "This is version", release
+version = "1.1.1"
+
+print "This is version", version
 
 with open("README.rst") as f:
     long_description = f.read()
     
 setup(
     name='mgn',
-    version=release,
+    version=version,
     packages=['strataalgebra', 'topintersections'],
     url='https://github.com/uberparagon/mgn',
     license='MIT',
