@@ -24,6 +24,8 @@ The code was integrated into this package (with some modifications and optimizat
 .. _tautrel.sage: http://math.mit.edu/~apixton/programs/tautrel.sage
 .. _S. Yang's note: https://arxiv.org/abs/0808.1974
 
+If you have any questions, comments, or find the code useful, please contact the author: ``werd2.718@gmail.com``.
+
 Installation and loading
 =========================================
 Installation should be (hopefully) easy. ``strataalgebra`` is distributed as part of the ``mgn`` package on PyPI. `Click here`_ for installation instructions.
