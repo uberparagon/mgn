@@ -14,7 +14,7 @@ version = "1.1.1"
 
 print "This is version", version
 
-with open("README.rst") as f:
+with open("description.rst") as f:
     long_description = f.read()
     
 setup(
