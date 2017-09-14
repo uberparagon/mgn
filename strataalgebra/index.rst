@@ -42,6 +42,8 @@ How to use
     
 .. automethod:: strataalgebra.StrataAlgebraElement.integrate
 .. automethod:: strataalgebra.StrataAlgebraElement.dict
+.. automethod:: strataalgebra.StrataAlgebraElement.codimen
+.. automethod:: strataalgebra.StrataAlgebraElement.in_kernel
 
 Testing
 =================

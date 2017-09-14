@@ -1,11 +1,5 @@
-"""
-Mostly by Pixton
-"""
 import itertools
 from sage.all import PolynomialRing, var, factorial, Matrix, ZZ, cached_function, copy, Permutations, SetPartitions, prod, SR, var, sage, Integer, operator
-
-
-#  initialized = True
   
 class StrataGraph(object):
   R = PolynomialRing(ZZ,"X",1,order='lex')

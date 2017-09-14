@@ -282,11 +282,27 @@ class StrataPyramid(UniqueRepresentation):
         The columns correspond to the basis elements of the Strata algebra, and each row is a relation.
 
         Notice that this matrix considers the kappa classes to be in the monomial basis. Thus, is different than the
-        output of Pixton's original ``taurel.sage`` program.
+        output of Pixton's original ``taurel.sage`` program. ::
+        
+            sage: from strataalgebra import *
+            sage: s = StrataAlgebra(QQ,0,(1,2,3,4))
+            sage: s.FZ_matrix(1)
+            [  -9/4   -9/4   -9/4 -153/4   45/4   45/4   45/4   45/4]
+            [   3/2    3/2    3/2  -33/2  -21/2   15/2   15/2   15/2]
+            [   3/2    3/2    3/2  -33/2   15/2  -21/2   15/2   15/2]
+            [   3/2    3/2    3/2  -33/2   15/2   15/2  -21/2   15/2]
+            [   3/2    3/2    3/2  -33/2   15/2   15/2   15/2  -21/2]
+            [ -15/4   21/4   21/4  -15/4  -21/4  -21/4   15/4   15/4]
+            [  21/4  -15/4   21/4  -15/4  -21/4   15/4  -21/4   15/4]
+            [  21/4   21/4  -15/4  -15/4  -21/4   15/4   15/4  -21/4]
+            [  21/4   21/4  -15/4  -15/4   15/4  -21/4  -21/4   15/4]
+            [  21/4  -15/4   21/4  -15/4   15/4  -21/4   15/4  -21/4]
+            [ -15/4   21/4   21/4  -15/4   15/4   15/4  -21/4  -21/4]
+            [ -15/4  -15/4  -15/4  -15/4   15/4   15/4   15/4   15/4]
 
         .. SEEALSO ::
 
-            :meth:`~strataalgebra.StrataAlgebra.FZ_matrix_pushforward_basis`
+            :meth:`~strataalgebra.StrataAlgebra.FZ_matrix_pushforward_basis`, :meth:`strataalgebra.StrataAlgebraElement.in_kernel`
 
 
         """
@@ -294,14 +310,29 @@ class StrataPyramid(UniqueRepresentation):
 
     def FZ_matrix_pushforward_basis(self,r):
         """
-        Return the matrix of Faber-Zagier relations, using the "pushforward" basis, NOT the kappa monomial basis
-        that the rest of the code uses.
+        Return the matrix of Faber-Zagier relations, using the "pushforward" basis, NOT the kappa monomial basis that the rest of the code uses.
 
         :param r: The codimension.
         :rtype: :class:`Matrix`
 
         The columns correspond to the basis elements of the Strata algebra, and each row is a relation.
-        This matrix should be the same as Pixton's original ``tautrel.sage`` program after permuting columns.
+        This matrix should be the same as Pixton's original ``tautrel.sage`` program after permuting columns. ::
+        
+            sage: from strataalgebra import *
+            sage: s = StrataAlgebra(QQ,0,(1,2,3,4))
+            sage: s.FZ_matrix_pushforward_basis(1)
+            [  -9/4   -9/4   -9/4 -153/4   45/4   45/4   45/4   45/4]
+            [   3/2    3/2    3/2  -33/2  -21/2   15/2   15/2   15/2]
+            [   3/2    3/2    3/2  -33/2   15/2  -21/2   15/2   15/2]
+            [   3/2    3/2    3/2  -33/2   15/2   15/2  -21/2   15/2]
+            [   3/2    3/2    3/2  -33/2   15/2   15/2   15/2  -21/2]
+            [ -15/4   21/4   21/4  -15/4  -21/4  -21/4   15/4   15/4]
+            [  21/4  -15/4   21/4  -15/4  -21/4   15/4  -21/4   15/4]
+            [  21/4   21/4  -15/4  -15/4  -21/4   15/4   15/4  -21/4]
+            [  21/4   21/4  -15/4  -15/4   15/4  -21/4  -21/4   15/4]
+            [  21/4  -15/4   21/4  -15/4   15/4  -21/4   15/4  -21/4]
+            [ -15/4   21/4   21/4  -15/4   15/4   15/4  -21/4  -21/4]
+            [ -15/4  -15/4  -15/4  -15/4   15/4   15/4   15/4   15/4]
         
         .. SEEALSO ::
 
@@ -316,7 +347,7 @@ class StrataPyramid(UniqueRepresentation):
         g=self.genus
         #moduli_type = 4
         ###
-        generators = self._dstrata[r].keys() #= get_all_strata(g,r,markings,moduli_type)
+        generators = self.all_strata(r)#self._dstrata[r].keys() #= get_all_strata(g,r,markings,moduli_type)
         ngen = len(generators)
       
         relations = []

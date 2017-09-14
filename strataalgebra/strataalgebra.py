@@ -1,5 +1,5 @@
 
-from sage.all import cached_method, CommutativeRings, prod, Rational, factorial, floor, Matrix, ZZ, subsets, var, RR
+from sage.all import cached_method, CommutativeRings, prod, Rational, factorial, floor, Matrix, ZZ, subsets, var, RR, repr_lincomb, vector
 from sage.rings.commutative_algebra import CommutativeAlgebra
 from sage.structure.unique_representation import UniqueRepresentation
 from sage.structure.element import CommutativeAlgebraElement
@@ -22,12 +22,16 @@ class StrataAlgebraElement(CommutativeAlgebraElement):
     def _repr_(self):
         l = self.coef_dict.items()
         l.sort()
-        terms = [self._pretty_coef(coef,codim,index) for (codim,index),coef in l if coef != 0]
-        if len(terms) >0:
-            return " + ".join(terms)
-        return "0"
+        return repr_lincomb([(self._pretty_basis_name(index[0],index[1]), coef) for index, coef in l])
+        
+        
+        #terms = [self._pretty_coef(coef,codim,index) for (codim,index),coef in l if coef != 0]
+        #if len(terms) >0:
+        #    return " + ".join(terms)
+        #return "0"
 
     def _pretty_coef(self, coef, codim, index):
+        raise Exception("depreciated!")
         name = self.parent().get_stratum(codim,index).nice_name()
         if name == None:
             name = "s_{0},{1}".format(codim,index)
@@ -38,6 +42,12 @@ class StrataAlgebraElement(CommutativeAlgebraElement):
             return "{0}*{1}".format(coef,name)
         else:
             return "({0}){1}".format(coef,name)
+            
+    def _pretty_basis_name(self, codim, index):
+        name = self.parent().get_stratum(codim,index).nice_name()
+        if name == None:
+            name = "s_{0},{1}".format(codim,index)
+        return name
 
         
     def _add_(self, other):
@@ -72,7 +82,7 @@ class StrataAlgebraElement(CommutativeAlgebraElement):
         
         Classes of codimension less that the dimension of the moduli space will integrate to 0.
         
-        This uses the FZ relations to perform the integration. It is probably not very efficient. But it provides a nice check of the implementation. Consider using the `topintersections` module if you need to compute something quickly. ::
+        This uses the FZ relations to perform the integration. It is probably not very efficient. But it provides a nice check of the implementation. Consider using the ``topintersections`` module if you need to compute something quickly. ::
         
             sage: from strataalgebra import *
             sage: s = StrataAlgebra(QQ,1,(1,2))
@@ -93,6 +103,8 @@ class StrataAlgebraElement(CommutativeAlgebraElement):
         
          
         """
+        if self.codim() < self.parent().moduli_dim:
+            return 0
         result = 0
         ints = self.parent().basis_integrals()
         for (codim,index), coef in self.coef_dict.items():
@@ -108,7 +120,7 @@ class StrataAlgebraElement(CommutativeAlgebraElement):
             sage: s = StrataAlgebra(QQ,1,(1,2,3)); s
             Strata algebra with genus 1 and markings (1, 2, 3) over Rational Field
             sage: a = s.psi(1)*s.psi(2) - 7* s.kappa(3); a
-            ps1*ps2 + -7*ka3
+            ps1*ps2 - 7*ka3
             sage: a.dict()
             {ps1*ps2: 1, ka3: -7}
 
@@ -121,6 +133,68 @@ class StrataAlgebraElement(CommutativeAlgebraElement):
         if 0 in other.coef_dict.values():
             other.coef_dict = {i:c for i,c in self.coef_dict.items() if c != 0}
         return self.coef_dict == other.coef_dict
+        
+    def in_kernel(self):
+        """
+        Return True is this :class:`StrataAlgebraElement` is in the span of the FZ relations, and hence in the kernel of the map to the tautological ring.
+        
+        ::
+            sage: from strataalgebra import *
+            sage: s = StrataAlgebra(QQ,0,(1,2,3,4,5))
+            sage: b = s.boundary(0,(1,2,5)) + s.boundary(0,(1,2)) - s.boundary(0,(1,3,5)) - s.boundary(0,(1,3))
+            sage: b
+            Dg0m1_2_5 + Dg0m1_2 - Dg0m1_3_5 - Dg0m1_3
+            sage: b.in_kernel()
+            True
+            sage: (s.psi(1) - s.psi(2)).in_kernel()
+            False
+
+            
+        It should work fine for non-homogeneous things as well. ::
+            
+            sage: (b + s.psi(1)).in_kernel()
+            False
+            sage: (b + s.psi(1)**2 - s.psi(2)**2).in_kernel()
+            True
+        """
+        for codim in range(self.codim()+1):
+            v = vector([0]*self.parent().hilbert(codim))
+            for (cd, index), coef in self.coef_dict.items():
+                if cd == codim:
+                    v[index] = coef
+            if v not in self.parent().FZ_matrix(codim).row_space():
+                return False
+        return True
+                
+            
+    def codim(self):
+        """
+        Returns the codimensions of this :class:`StrataAlgebraElement`. 
+        
+        If it is not homogeneous, it retunrs the maximum codimension of a basis element with a non-zero coefficient. ::
+        
+            sage: from strataalgebra import *
+            sage: s = StrataAlgebra(QQ,2)
+            sage: s(1,0).codim()
+            1
+            sage: s(2,1).codim()
+            2
+            sage: s(0,0).codim()
+            0
+            sage: (35*s(2,3) - 7*s(1,1) + s.kappa(2) - s(0,0)).codim()
+            2
+            sage: s.zero().codim()
+            -1
+        """
+        codim = -1
+        for (cd, index), coef in self.coef_dict.items():
+            if cd > codim and coef != 0:
+                codim = cd
+        return codim
+        
+        
+            
+            
 
         
 
@@ -257,7 +331,7 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
             sage: 3*b
             3*s_2,7
             sage: a*72 - b/17
-            72*s_2,1 + -1/17*s_2,7
+            72*s_2,1 - 1/17*s_2,7
 
         Use :meth:`~strataalgebra.StrataAlgebra.get_stratum` if you need to know what an unamed basis element means. ::
 
@@ -316,7 +390,7 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
             [      0       1       0       0       1       1]
             [ka1 + 1       0       0       0       0       1]
             sage: SA.irr()^3
-            6*s_3,4 + -3*s_3,15 + -3*s_3,23 + -3*s_3,35 + s_3,48 + s_3,49
+            6*s_3,4 - 3*s_3,15 - 3*s_3,23 - 3*s_3,35 + s_3,48 + s_3,49
 
         Everything should work with distributive laws, etc. ::
 
@@ -329,9 +403,9 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
             sage: SA = StrataAlgebra(R, 2); SA
             Strata algebra with genus 2 and markings () over Univariate Polynomial Ring in t over Integer Ring
             sage: (3+t)*SA.kappa(1) + t^2 + t*SA.kappa(1)
-            (t^2)one + (2*t + 3)ka1
+            t^2*one + (2*t+3)*ka1
             sage: _^2
-            (t^4)one + (4*t^3 + 6*t^2)ka1 + (4*t^2 + 12*t + 9)ka1^2
+            t^4*one + (4*t^3+6*t^2)*ka1 + (4*t^2+12*t+9)*ka1^2
 
 
         There may be problems over a non-divisible ring. ::
@@ -411,7 +485,7 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
         self.get_stratum = self.strataP.get_stratum
         self.FZ_matrix = self.strataP.FZ_matrix
         self.print_strata = self.strataP.print_strata
-        self.FZ_matrix_pushforward_basis = StrataPyramid.FZ_matrix_pushforward_basis
+        self.FZ_matrix_pushforward_basis = self.strataP.FZ_matrix_pushforward_basis
 
         CommutativeAlgebra.__init__(self, base)
 

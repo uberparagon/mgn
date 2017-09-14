@@ -184,7 +184,7 @@ and the rest are represented by <code class="docutils literal"><span class="pre"
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="mi">3</span><span class="o">*</span><span class="n">b</span>
 <span class="go">3*s_2,7</span>
 <span class="gp">sage: </span><span class="n">a</span><span class="o">*</span><span class="mi">72</span> <span class="o">-</span> <span class="n">b</span><span class="o">/</span><span class="mi">17</span>
-<span class="go">72*s_2,1 + -1/17*s_2,7</span>
+<span class="go">72*s_2,1 - 1/17*s_2,7</span>
 </pre></div>
 </div>
 <p>Use <a class="reference internal" href="#strataalgebra.StrataAlgebra.get_stratum" title="strataalgebra.StrataAlgebra.get_stratum"><code class="xref py py-meth docutils literal"><span class="pre">get_stratum()</span></code></a> if you need to know what an unamed basis element means.</p>
@@ -242,7 +242,7 @@ and the rest are represented by <code class="docutils literal"><span class="pre"
 <span class="go">[      0       1       0       0       1       1]</span>
 <span class="go">[ka1 + 1       0       0       0       0       1]</span>
 <span class="gp">sage: </span><span class="n">SA</span><span class="o">.</span><span class="n">irr</span><span class="p">()</span><span class="o">^</span><span class="mi">3</span>
-<span class="go">6*s_3,4 + -3*s_3,15 + -3*s_3,23 + -3*s_3,35 + s_3,48 + s_3,49</span>
+<span class="go">6*s_3,4 - 3*s_3,15 - 3*s_3,23 - 3*s_3,35 + s_3,48 + s_3,49</span>
 </pre></div>
 </div>
 <p>Everything should work with distributive laws, etc.</p>
@@ -255,9 +255,9 @@ and the rest are represented by <code class="docutils literal"><span class="pre"
 <span class="gp">sage: </span><span class="n">SA</span> <span class="o">=</span> <span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="n">SA</span>
 <span class="go">Strata algebra with genus 2 and markings () over Univariate Polynomial Ring in t over Integer Ring</span>
 <span class="gp">sage: </span><span class="p">(</span><span class="mi">3</span><span class="o">+</span><span class="n">t</span><span class="p">)</span><span class="o">*</span><span class="n">SA</span><span class="o">.</span><span class="n">kappa</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">t</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="n">t</span><span class="o">*</span><span class="n">SA</span><span class="o">.</span><span class="n">kappa</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="go">(t^2)one + (2*t + 3)ka1</span>
+<span class="go">t^2*one + (2*t+3)*ka1</span>
 <span class="gp">sage: </span><span class="n">_</span><span class="o">^</span><span class="mi">2</span>
-<span class="go">(t^4)one + (4*t^3 + 6*t^2)ka1 + (4*t^2 + 12*t + 9)ka1^2</span>
+<span class="go">t^4*one + (4*t^3+6*t^2)*ka1 + (4*t^2+12*t+9)*ka1^2</span>
 </pre></div>
 </div>
 <p>There may be problems over a non-divisible ring.</p>
@@ -363,17 +363,33 @@ If the codimension is omited, return a list of all of them.</p>
 <p>The columns correspond to the basis elements of the Strata algebra, and each row is a relation.</p>
 <p>Notice that this matrix considers the kappa classes to be in the monomial basis. Thus, is different than the
 output of Pixton&#8217;s original <code class="docutils literal"><span class="pre">taurel.sage</span></code> program.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">strataalgebra</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">sage: </span><span class="n">s</span> <span class="o">=</span> <span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span><span class="mi">0</span><span class="p">,(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="gp">sage: </span><span class="n">s</span><span class="o">.</span><span class="n">FZ_matrix</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">[  -9/4   -9/4   -9/4 -153/4   45/4   45/4   45/4   45/4]</span>
+<span class="go">[   3/2    3/2    3/2  -33/2  -21/2   15/2   15/2   15/2]</span>
+<span class="go">[   3/2    3/2    3/2  -33/2   15/2  -21/2   15/2   15/2]</span>
+<span class="go">[   3/2    3/2    3/2  -33/2   15/2   15/2  -21/2   15/2]</span>
+<span class="go">[   3/2    3/2    3/2  -33/2   15/2   15/2   15/2  -21/2]</span>
+<span class="go">[ -15/4   21/4   21/4  -15/4  -21/4  -21/4   15/4   15/4]</span>
+<span class="go">[  21/4  -15/4   21/4  -15/4  -21/4   15/4  -21/4   15/4]</span>
+<span class="go">[  21/4   21/4  -15/4  -15/4  -21/4   15/4   15/4  -21/4]</span>
+<span class="go">[  21/4   21/4  -15/4  -15/4   15/4  -21/4  -21/4   15/4]</span>
+<span class="go">[  21/4  -15/4   21/4  -15/4   15/4  -21/4   15/4  -21/4]</span>
+<span class="go">[ -15/4   21/4   21/4  -15/4   15/4   15/4  -21/4  -21/4]</span>
+<span class="go">[ -15/4  -15/4  -15/4  -15/4   15/4   15/4   15/4   15/4]</span>
+</pre></div>
+</div>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="#strataalgebra.StrataAlgebra.FZ_matrix_pushforward_basis" title="strataalgebra.StrataAlgebra.FZ_matrix_pushforward_basis"><code class="xref py py-meth docutils literal"><span class="pre">FZ_matrix_pushforward_basis()</span></code></a></p>
+<p class="last"><a class="reference internal" href="#strataalgebra.StrataAlgebra.FZ_matrix_pushforward_basis" title="strataalgebra.StrataAlgebra.FZ_matrix_pushforward_basis"><code class="xref py py-meth docutils literal"><span class="pre">FZ_matrix_pushforward_basis()</span></code></a>, <a class="reference internal" href="#strataalgebra.StrataAlgebraElement.in_kernel" title="strataalgebra.StrataAlgebraElement.in_kernel"><code class="xref py py-meth docutils literal"><span class="pre">strataalgebra.StrataAlgebraElement.in_kernel()</span></code></a></p>
 </div>
 </dd></dl>
 
 <dl class="method">
 <dt id="strataalgebra.StrataAlgebra.FZ_matrix_pushforward_basis">
 <code class="descname">FZ_matrix_pushforward_basis</code><span class="sig-paren">(</span><em>r</em><span class="sig-paren">)</span><a class="headerlink" href="#strataalgebra.StrataAlgebra.FZ_matrix_pushforward_basis" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the matrix of Faber-Zagier relations, using the &#8220;pushforward&#8221; basis, NOT the kappa monomial basis
-that the rest of the code uses.</p>
+<dd><p>Return the matrix of Faber-Zagier relations, using the &#8220;pushforward&#8221; basis, NOT the kappa monomial basis that the rest of the code uses.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -386,6 +402,23 @@ that the rest of the code uses.</p>
 </table>
 <p>The columns correspond to the basis elements of the Strata algebra, and each row is a relation.
 This matrix should be the same as Pixton&#8217;s original <code class="docutils literal"><span class="pre">tautrel.sage</span></code> program after permuting columns.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">strataalgebra</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">sage: </span><span class="n">s</span> <span class="o">=</span> <span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span><span class="mi">0</span><span class="p">,(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="gp">sage: </span><span class="n">s</span><span class="o">.</span><span class="n">FZ_matrix_pushforward_basis</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">[  -9/4   -9/4   -9/4 -153/4   45/4   45/4   45/4   45/4]</span>
+<span class="go">[   3/2    3/2    3/2  -33/2  -21/2   15/2   15/2   15/2]</span>
+<span class="go">[   3/2    3/2    3/2  -33/2   15/2  -21/2   15/2   15/2]</span>
+<span class="go">[   3/2    3/2    3/2  -33/2   15/2   15/2  -21/2   15/2]</span>
+<span class="go">[   3/2    3/2    3/2  -33/2   15/2   15/2   15/2  -21/2]</span>
+<span class="go">[ -15/4   21/4   21/4  -15/4  -21/4  -21/4   15/4   15/4]</span>
+<span class="go">[  21/4  -15/4   21/4  -15/4  -21/4   15/4  -21/4   15/4]</span>
+<span class="go">[  21/4   21/4  -15/4  -15/4  -21/4   15/4   15/4  -21/4]</span>
+<span class="go">[  21/4   21/4  -15/4  -15/4   15/4  -21/4  -21/4   15/4]</span>
+<span class="go">[  21/4  -15/4   21/4  -15/4   15/4  -21/4   15/4  -21/4]</span>
+<span class="go">[ -15/4   21/4   21/4  -15/4   15/4   15/4  -21/4  -21/4]</span>
+<span class="go">[ -15/4  -15/4  -15/4  -15/4   15/4   15/4   15/4   15/4]</span>
+</pre></div>
+</div>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <p class="last"><a class="reference internal" href="#strataalgebra.StrataAlgebra.FZ_matrix" title="strataalgebra.StrataAlgebra.FZ_matrix"><code class="xref py py-meth docutils literal"><span class="pre">FZ_matrix()</span></code></a></p>
@@ -445,7 +478,7 @@ This is useful for testing purposes.</p>
 <dl class="attribute">
 <dt id="strataalgebra.StrataAlgebra.basis_integrals">
 <code class="descname">basis_integrals</code><a class="headerlink" href="#strataalgebra.StrataAlgebra.basis_integrals" title="Permalink to this definition">¶</a></dt>
-<dd><p>File: /Users/drewjohnson/mgn/strataalgebra/strataalgebra.py (starting at line 431)</p>
+<dd><p>File: /Users/drewjohnson/mgn/strataalgebra/strataalgebra.py (starting at line 505)</p>
 <p>Return a list of numbers corresponding to the integrals of the basis elements in the top codimension.</p>
 <p>This is computed via the FZ relations, so it is probably not fast. However, it is a nice check.</p>
 <p>The value is cached, so you only have to compute it once per session.</p>
@@ -698,7 +731,7 @@ If the codimension is omitted, return a list of all of them.</p>
 <code class="descclassname">StrataAlgebraElement.</code><code class="descname">integrate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#strataalgebra.StrataAlgebraElement.integrate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the integral of this class, i.e. its degree in the top codimension.</p>
 <p>Classes of codimension less that the dimension of the moduli space will integrate to 0.</p>
-<p>This uses the FZ relations to perform the integration. It is probably not very efficient. But it provides a nice check of the implementation. Consider using the <cite>topintersections</cite> module if you need to compute something quickly.</p>
+<p>This uses the FZ relations to perform the integration. It is probably not very efficient. But it provides a nice check of the implementation. Consider using the <code class="docutils literal"><span class="pre">topintersections</span></code> module if you need to compute something quickly.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">strataalgebra</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="gp">sage: </span><span class="n">s</span> <span class="o">=</span> <span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span><span class="mi">1</span><span class="p">,(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
 <span class="gp">sage: </span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">psi</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">s</span><span class="o">.</span><span class="n">psi</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span><span class="o">.</span><span class="n">integrate</span><span class="p">()</span>
@@ -727,9 +760,34 @@ If the codimension is omitted, return a list of all of them.</p>
 <span class="gp">sage: </span><span class="n">s</span> <span class="o">=</span> <span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span><span class="mi">1</span><span class="p">,(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">));</span> <span class="n">s</span>
 <span class="go">Strata algebra with genus 1 and markings (1, 2, 3) over Rational Field</span>
 <span class="gp">sage: </span><span class="n">a</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">psi</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">s</span><span class="o">.</span><span class="n">psi</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">7</span><span class="o">*</span> <span class="n">s</span><span class="o">.</span><span class="n">kappa</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span> <span class="n">a</span>
-<span class="go">ps1*ps2 + -7*ka3</span>
+<span class="go">ps1*ps2 - 7*ka3</span>
 <span class="gp">sage: </span><span class="n">a</span><span class="o">.</span><span class="n">dict</span><span class="p">()</span>
 <span class="go">{ps1*ps2: 1, ka3: -7}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="strataalgebra.StrataAlgebraElement.in_kernel">
+<code class="descclassname">StrataAlgebraElement.</code><code class="descname">in_kernel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#strataalgebra.StrataAlgebraElement.in_kernel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True is this <code class="xref py py-class docutils literal"><span class="pre">StrataAlgebraElement</span></code> is in the span of the FZ relations, and hence in the kernel of the map to the tautological ring.</p>
+<dl class="docutils">
+<dt>::</dt>
+<dd>sage: from strataalgebra import *
+sage: s = StrataAlgebra(QQ,0,(1,2,3,4,5))
+sage: b = s.boundary(0,(1,2,5)) + s.boundary(0,(1,2)) - s.boundary(0,(1,3,5)) - s.boundary(0,(1,3))
+sage: b
+Dg0m1_2_5 + Dg0m1_2 - Dg0m1_3_5 - Dg0m1_3
+sage: b.in_kernel()
+True
+sage: (s.psi(1) - s.psi(2)).in_kernel()
+False</dd>
+</dl>
+<p>It should work fine for non-homogeneous things as well.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="p">(</span><span class="n">b</span> <span class="o">+</span> <span class="n">s</span><span class="o">.</span><span class="n">psi</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">in_kernel</span><span class="p">()</span>
+<span class="go">False</span>
+<span class="gp">sage: </span><span class="p">(</span><span class="n">b</span> <span class="o">+</span> <span class="n">s</span><span class="o">.</span><span class="n">psi</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">s</span><span class="o">.</span><span class="n">psi</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">in_kernel</span><span class="p">()</span>
+<span class="go">True</span>
 </pre></div>
 </div>
 </dd></dl>
