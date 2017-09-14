@@ -24,13 +24,13 @@ The code was integrated into this package (with some modifications and optimizat
 .. _tautrel.sage: http://math.mit.edu/~apixton/programs/tautrel.sage
 .. _S. Yang's note: https://arxiv.org/abs/0808.1974
 
-Installation
+Installation and loading
 =========================================
 Installation should be (hopefully) easy. ``strataalgebra`` is distributed as part of the ``mgn`` package on PyPI. `Click here`_ for installation instructions.
 
 .. _Click here: https://pypi.python.org/pypi/mgn/
 
-Once it is installed, you can load it in a sage session by typing: ::
+Once it is installed, you can load it in a Sage session by typing: ::
 
     sage: from strataalgebra import *
 
@@ -42,7 +42,7 @@ How to use
     
 .. automethod:: strataalgebra.StrataAlgebraElement.integrate
 .. automethod:: strataalgebra.StrataAlgebraElement.dict
-.. automethod:: strataalgebra.StrataAlgebraElement.codimen
+.. automethod:: strataalgebra.StrataAlgebraElement.codim
 .. automethod:: strataalgebra.StrataAlgebraElement.in_kernel
 
 Testing
@@ -56,6 +56,5 @@ Indices and tables
 ==================
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
 

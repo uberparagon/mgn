@@ -197,28 +197,6 @@ class StrataGraph(object):
         if ex[0] != 0:
             yield ex[0], coef
             
-  def psi_on_v(self,v):
-    """
-    Drew added this.
-    """
-    raise Exception("Depreciated")
-    for edge in range(1,self.num_edges()+1):
-        if self.M[v,edge][0] > 0:
-            psi_expon = self.M[v,edge][1]
-            if psi_expon > 0:
-                yield edge, psi_expon
-
-                
-  def extra_psi_on_v(self,v):
-    """
-    Drew added this.
-    """
-    raise Exception("Depreciated")
-    for edge in range(1,self.num_edges()+1):
-        if self.M[v,edge][0] > 1:
-            psi_expon = self.M[v,edge][2]
-            if psi_expon > 0:
-                yield edge, psi_expon
                 
   def psi_no_loop_on_v(self,v):
     for edge in range(1,self.num_edges()+1):

@@ -17,7 +17,12 @@ This page demonstrates how to compute top intersections on Deligne-Mumford compa
 Acknowledgments
 =================
 
-I worked on this project as a graduate student at Brigham Young University while being funded by the NSA grant of my adviser, Tyler Jarvis. Dr. Jarvis also answered many questions and pointed me to helpful resources during this project. The mathematical basis of the algorithms implemented here come from the paper accompanying Carel Faber's Maple code, and also from Stephanie Yang's write up about her Macaulay 2 code.  The code computes the Witten tau function using the recursion of Liu and Xu.
+I worked on this project as a graduate student at Brigham Young University while being funded by the NSA grant of my adviser, Tyler Jarvis. Dr. Jarvis also answered many questions and pointed me to helpful resources during this project. The mathematical basis of the algorithms implemented here come from the `paper`_ accompanying Carel Faber's Maple code, and also from Stephanie Yang's `write up`_ about her Macaulay 2 code.  The code computes the Witten tau function using the recursion of `Liu and Xu`_.
+
+.. _paper: http://arxiv.org/abs/alg-geom/9706006
+.. _write up: http://j-sag.org/Volume2/jsag-1-2010.pdf
+.. _Liu and Xu: http://arxiv.org/abs/0710.5322
+
 
 Installing and starting
 =========================

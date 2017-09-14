@@ -24,28 +24,7 @@ class OrderedSetWithIndex(collections.OrderedDict):
     def add_all(self, iter):
         for i in iter:
             self.add(i)
-     
-class StrataPyramidMetaclass(type):
-    def __init__(self, *args, **kwargs):
-        print "Depreciated!!!!"
-        super(StrataPyramidMetaclass, self).__init__(*args, **kwargs)
-        self.dict = dict()
-        
-    def __call__(self, *args, **kwargs):
-        g = args[0]
-        markings = tuple(args[1])
-        
-        value = self.dict.get((g,markings),None)
-        if value == None:
-            print "Building StrataPyramid for g={0} and markings {1}".format(g,markings)
-            sp = super(StrataPyramidMetaclass,self).__call__(g,markings)
-            sp.build()
-            self.dict[(g,markings)] = sp
-            return sp
-        else:
-            return value
-      
-        
+              
 class StrataPyramid(UniqueRepresentation):
     #__metaclass__ = StrataPyramidMetaclass
     def __init__(self,genus,markings):
@@ -76,24 +55,6 @@ class StrataPyramid(UniqueRepresentation):
 
     def open_stratum(self):
         return self._dstrata[0].keys()[0]
-
-    def build(self):
-        raise Exception("Depreciated!")
-        self.build_undecorated_strata()
-        self.build_decorated_strata()
-          
-    def build_undecorated_strata(self):
-        raise Exception("Depreciated!")
-        
-        for r in range(self.moduli_dim):
-            for G in self._specialization[r]:
-                Gd = degenerate1_list(G)
-                self._specialization[r][G] = set(Gd)
-                self._specialization[r+1].update(( (G,None) for G in Gd ))
-        
-        for topG in self._specialization[self.moduli_dim].keys():
-            self._specialization[self.moduli_dim][topG] = set()
-        print "undecorated construction complete!"
 
     def codim_index_from_graph(self, G):
         codim = G.codim()
@@ -204,21 +165,6 @@ class StrataPyramid(UniqueRepresentation):
                     M[Gind, self._dstrata[r][Gd]] += coef
                 
         return M #.transpose()
-        
-    def build_decorated_strata(self):
-        """
-        You should have called build_decorated_strata first.
-        """
-        raise Exception("depreciated!")
-        #if self._specialization[r] is None:
-        #    self.build_specialization(r)
-
-        for r in range(self.moduli_dim+1):
-            self._dstrata[r].add_all(self._specialization[r].keys())
-            for G in self._specialization[r]:
-                for d in range(1, self.moduli_dim-r+1):
-                    self._dstrata[r + d].add_all(decorate1_list(G, d))
-        print "decorated construction complete!"
                 
     def specialization(self,G):
         codim = G.codim_undecorated()
@@ -302,7 +248,7 @@ class StrataPyramid(UniqueRepresentation):
 
         .. SEEALSO ::
 
-            :meth:`~strataalgebra.StrataAlgebra.FZ_matrix_pushforward_basis`, :meth:`strataalgebra.StrataAlgebraElement.in_kernel`
+            :meth:`~strataalgebra.StrataAlgebra.FZ_matrix_pushforward_basis`, :meth:`~strataalgebra.StrataAlgebraElement.in_kernel`
 
 
         """
@@ -828,11 +774,3 @@ def C_coeff(m,term):
     return A_list[n]
   else:
     return B_list[n]
-    
-def tuplify(S_list):
-    """
-    Drew added this.
-    This should change S_list from a list of lists of lists to a list of lists of tuples.
-    """
-    raise Exception("depreciated!!!")
-    return [[tuple(l2)  for l2 in l1] for l1 in S_list]

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>strataalgebra Documentation &#8212; StrataAlgegra 1.0.0 documentation</title>
+    <title>strataalgebra Documentation &#8212; StrataAlgegra 1.0.10 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.0.0',
+        VERSION:     '1.0.10',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -38,7 +38,7 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">StrataAlgegra 1.0.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">StrataAlgegra 1.0.10 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -59,10 +59,10 @@ The program also computes the FZ relations using code copied from A. Pixton&#821
 The code was integrated into this package (with some modifications and optimizations) by Drew Johnson
 (who takes responsibility for any bugs introduced!).</p>
 </div>
-<div class="section" id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="installation-and-loading">
+<h1>Installation and loading<a class="headerlink" href="#installation-and-loading" title="Permalink to this headline">¶</a></h1>
 <p>Installation should be (hopefully) easy. <code class="docutils literal"><span class="pre">strataalgebra</span></code> is distributed as part of the <code class="docutils literal"><span class="pre">mgn</span></code> package on PyPI. <a class="reference external" href="https://pypi.python.org/pypi/mgn/">Click here</a> for installation instructions.</p>
-<p>Once it is installed, you can load it in a sage session by typing:</p>
+<p>Once it is installed, you can load it in a Sage session by typing:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">strataalgebra</span> <span class="kn">import</span> <span class="o">*</span>
 </pre></div>
 </div>
@@ -382,7 +382,7 @@ output of Pixton&#8217;s original <code class="docutils literal"><span class="pr
 </div>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="#strataalgebra.StrataAlgebra.FZ_matrix_pushforward_basis" title="strataalgebra.StrataAlgebra.FZ_matrix_pushforward_basis"><code class="xref py py-meth docutils literal"><span class="pre">FZ_matrix_pushforward_basis()</span></code></a>, <a class="reference internal" href="#strataalgebra.StrataAlgebraElement.in_kernel" title="strataalgebra.StrataAlgebraElement.in_kernel"><code class="xref py py-meth docutils literal"><span class="pre">strataalgebra.StrataAlgebraElement.in_kernel()</span></code></a></p>
+<p class="last"><a class="reference internal" href="#strataalgebra.StrataAlgebra.FZ_matrix_pushforward_basis" title="strataalgebra.StrataAlgebra.FZ_matrix_pushforward_basis"><code class="xref py py-meth docutils literal"><span class="pre">FZ_matrix_pushforward_basis()</span></code></a>, <a class="reference internal" href="#strataalgebra.StrataAlgebraElement.in_kernel" title="strataalgebra.StrataAlgebraElement.in_kernel"><code class="xref py py-meth docutils literal"><span class="pre">in_kernel()</span></code></a></p>
 </div>
 </dd></dl>
 
@@ -478,11 +478,11 @@ This is useful for testing purposes.</p>
 <dl class="attribute">
 <dt id="strataalgebra.StrataAlgebra.basis_integrals">
 <code class="descname">basis_integrals</code><a class="headerlink" href="#strataalgebra.StrataAlgebra.basis_integrals" title="Permalink to this definition">¶</a></dt>
-<dd><p>File: /Users/drewjohnson/mgn/strataalgebra/strataalgebra.py (starting at line 505)</p>
+<dd><p>File: /Users/drewjohnson/mgn/strataalgebra/strataalgebra.py (starting at line 491)</p>
 <p>Return a list of numbers corresponding to the integrals of the basis elements in the top codimension.</p>
 <p>This is computed via the FZ relations, so it is probably not fast. However, it is a nice check.</p>
 <p>The value is cached, so you only have to compute it once per session.</p>
-<p>This is used by <code class="xref py py-meth docutils literal"><span class="pre">StrataAlgebraElement.integrate()</span></code> which is the more likely way you will want to use it.</p>
+<p>This is used by <a class="reference internal" href="#strataalgebra.StrataAlgebraElement.integrate" title="strataalgebra.StrataAlgebraElement.integrate"><code class="xref py py-meth docutils literal"><span class="pre">integrate()</span></code></a> which is the more likely way you will want to use it.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">strataalgebra</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="gp">sage: </span><span class="n">s</span> <span class="o">=</span> <span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span><span class="mi">1</span><span class="p">,(</span><span class="mi">1</span><span class="p">,))</span>
 <span class="gp">sage: </span><span class="n">s</span><span class="o">.</span><span class="n">print_strata</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
@@ -671,9 +671,17 @@ If the codimension is omitted, return a list of all of them.</p>
 <dl class="method">
 <dt id="strataalgebra.StrataAlgebra.psi">
 <code class="descname">psi</code><span class="sig-paren">(</span><em>mark</em><span class="sig-paren">)</span><a class="headerlink" href="#strataalgebra.StrataAlgebra.psi" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a psi class.
-:param int mark:  The mark that the <span class="math">\(\psi\)</span>-class is associated to.
-:rtype: <code class="xref py py-class docutils literal"><span class="pre">StrataAlgebraElement</span></code></p>
+<dd><p>Return a psi class.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mark</strong> (<em>int</em>) &#8211; The mark that the <span class="math">\(\psi\)</span>-class is associated to.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">StrataAlgebraElement</span></code></td>
+</tr>
+</tbody>
+</table>
 <p>Examples</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">strataalgebra</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="gp">sage: </span><span class="n">s</span> <span class="o">=</span> <span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span><span class="mi">0</span><span class="p">,(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
@@ -755,7 +763,7 @@ If the codimension is omitted, return a list of all of them.</p>
 <dl class="method">
 <dt id="strataalgebra.StrataAlgebraElement.dict">
 <code class="descclassname">StrataAlgebraElement.</code><code class="descname">dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#strataalgebra.StrataAlgebraElement.dict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a dictionary with keys as StrataGraph objects and values as the coefficient of that stratum in this element.</p>
+<dd><p>Return a dictionary with keys as <code class="xref py py-class docutils literal"><span class="pre">StrataGraph</span></code> objects and values as the coefficient of that stratum in this element.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">strataalgebra</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="gp">sage: </span><span class="n">s</span> <span class="o">=</span> <span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span><span class="mi">1</span><span class="p">,(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">));</span> <span class="n">s</span>
 <span class="go">Strata algebra with genus 1 and markings (1, 2, 3) over Rational Field</span>
@@ -768,21 +776,41 @@ If the codimension is omitted, return a list of all of them.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="strataalgebra.StrataAlgebraElement.codim">
+<code class="descclassname">StrataAlgebraElement.</code><code class="descname">codim</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#strataalgebra.StrataAlgebraElement.codim" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the codimensions of this <code class="xref py py-class docutils literal"><span class="pre">StrataAlgebraElement</span></code>.</p>
+<p>If it is not homogeneous, it retunrs the maximum codimension of a basis element with a non-zero coefficient.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">strataalgebra</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">sage: </span><span class="n">s</span> <span class="o">=</span> <span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">sage: </span><span class="n">s</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">codim</span><span class="p">()</span>
+<span class="go">1</span>
+<span class="gp">sage: </span><span class="n">s</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">codim</span><span class="p">()</span>
+<span class="go">2</span>
+<span class="gp">sage: </span><span class="n">s</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">codim</span><span class="p">()</span>
+<span class="go">0</span>
+<span class="gp">sage: </span><span class="p">(</span><span class="mi">35</span><span class="o">*</span><span class="n">s</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="mi">7</span><span class="o">*</span><span class="n">s</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">s</span><span class="o">.</span><span class="n">kappa</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">s</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">codim</span><span class="p">()</span>
+<span class="go">2</span>
+<span class="gp">sage: </span><span class="n">s</span><span class="o">.</span><span class="n">zero</span><span class="p">()</span><span class="o">.</span><span class="n">codim</span><span class="p">()</span>
+<span class="go">-1</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
 <dt id="strataalgebra.StrataAlgebraElement.in_kernel">
 <code class="descclassname">StrataAlgebraElement.</code><code class="descname">in_kernel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#strataalgebra.StrataAlgebraElement.in_kernel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return True is this <code class="xref py py-class docutils literal"><span class="pre">StrataAlgebraElement</span></code> is in the span of the FZ relations, and hence in the kernel of the map to the tautological ring.</p>
-<dl class="docutils">
-<dt>::</dt>
-<dd>sage: from strataalgebra import *
-sage: s = StrataAlgebra(QQ,0,(1,2,3,4,5))
-sage: b = s.boundary(0,(1,2,5)) + s.boundary(0,(1,2)) - s.boundary(0,(1,3,5)) - s.boundary(0,(1,3))
-sage: b
-Dg0m1_2_5 + Dg0m1_2 - Dg0m1_3_5 - Dg0m1_3
-sage: b.in_kernel()
-True
-sage: (s.psi(1) - s.psi(2)).in_kernel()
-False</dd>
-</dl>
+<dd><p>Determine whether this <code class="xref py py-class docutils literal"><span class="pre">StrataAlgebraElement</span></code> is in the span of the FZ relations, and hence in the kernel of the map to the tautological ring.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="kn">from</span> <span class="nn">strataalgebra</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">sage: </span><span class="n">s</span> <span class="o">=</span> <span class="n">StrataAlgebra</span><span class="p">(</span><span class="n">QQ</span><span class="p">,</span><span class="mi">0</span><span class="p">,(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="gp">sage: </span><span class="n">b</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">boundary</span><span class="p">(</span><span class="mi">0</span><span class="p">,(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span> <span class="o">+</span> <span class="n">s</span><span class="o">.</span><span class="n">boundary</span><span class="p">(</span><span class="mi">0</span><span class="p">,(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span> <span class="o">-</span> <span class="n">s</span><span class="o">.</span><span class="n">boundary</span><span class="p">(</span><span class="mi">0</span><span class="p">,(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span> <span class="o">-</span> <span class="n">s</span><span class="o">.</span><span class="n">boundary</span><span class="p">(</span><span class="mi">0</span><span class="p">,(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="gp">sage: </span><span class="n">b</span>
+<span class="go">Dg0m1_2_5 + Dg0m1_2 - Dg0m1_3_5 - Dg0m1_3</span>
+<span class="gp">sage: </span><span class="n">b</span><span class="o">.</span><span class="n">in_kernel</span><span class="p">()</span>
+<span class="go">True</span>
+<span class="gp">sage: </span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">psi</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">s</span><span class="o">.</span><span class="n">psi</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span><span class="o">.</span><span class="n">in_kernel</span><span class="p">()</span>
+<span class="go">False</span>
+</pre></div>
+</div>
 <p>It should work fine for non-homogeneous things as well.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">sage: </span><span class="p">(</span><span class="n">b</span> <span class="o">+</span> <span class="n">s</span><span class="o">.</span><span class="n">psi</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">in_kernel</span><span class="p">()</span>
 <span class="go">False</span>
@@ -808,7 +836,6 @@ False</dd>
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
-<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
 <li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
 </ul>
 </div>
@@ -822,7 +849,7 @@ False</dd>
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">strataalgebra Documentation</a></li>
-<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#installation-and-loading">Installation and loading</a></li>
 <li><a class="reference internal" href="#how-to-use">How to use</a></li>
 <li><a class="reference internal" href="#module-tests">Testing</a></li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
@@ -858,7 +885,7 @@ False</dd>
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">StrataAlgegra 1.0.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">StrataAlgegra 1.0.10 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

@@ -29,19 +29,6 @@ class StrataAlgebraElement(CommutativeAlgebraElement):
         #if len(terms) >0:
         #    return " + ".join(terms)
         #return "0"
-
-    def _pretty_coef(self, coef, codim, index):
-        raise Exception("depreciated!")
-        name = self.parent().get_stratum(codim,index).nice_name()
-        if name == None:
-            name = "s_{0},{1}".format(codim,index)
-        if coef == 1:
-            return name
-
-        if coef in RR:
-            return "{0}*{1}".format(coef,name)
-        else:
-            return "({0}){1}".format(coef,name)
             
     def _pretty_basis_name(self, codim, index):
         name = self.parent().get_stratum(codim,index).nice_name()
@@ -114,7 +101,7 @@ class StrataAlgebraElement(CommutativeAlgebraElement):
 
     def dict(self):
         """
-        Return a dictionary with keys as StrataGraph objects and values as the coefficient of that stratum in this element. ::
+        Return a dictionary with keys as :class:`StrataGraph` objects and values as the coefficient of that stratum in this element. ::
 
             sage: from strataalgebra import *
             sage: s = StrataAlgebra(QQ,1,(1,2,3)); s
@@ -136,9 +123,8 @@ class StrataAlgebraElement(CommutativeAlgebraElement):
         
     def in_kernel(self):
         """
-        Return True is this :class:`StrataAlgebraElement` is in the span of the FZ relations, and hence in the kernel of the map to the tautological ring.
+        Determine whether this :class:`StrataAlgebraElement` is in the span of the FZ relations, and hence in the kernel of the map to the tautological ring. ::
         
-        ::
             sage: from strataalgebra import *
             sage: s = StrataAlgebra(QQ,0,(1,2,3,4,5))
             sage: b = s.boundary(0,(1,2,5)) + s.boundary(0,(1,2)) - s.boundary(0,(1,3,5)) - s.boundary(0,(1,3))
@@ -486,7 +472,7 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
         self.FZ_matrix = self.strataP.FZ_matrix
         self.print_strata = self.strataP.print_strata
         self.FZ_matrix_pushforward_basis = self.strataP.FZ_matrix_pushforward_basis
-
+        
         CommutativeAlgebra.__init__(self, base)
 
         if make_vars:
@@ -502,8 +488,8 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
     
     
     
-    @cached_method
-    def basis_integrals(self):
+    @cached_method #This breaks the autodocs for some reason...
+    def basis_integrals(self, s=None):
         """
         Return a list of numbers corresponding to the integrals of the basis elements in the top codimension.
 
@@ -511,7 +497,7 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
 
         The value is cached, so you only have to compute it once per session.
 
-        This is used by :meth:`StrataAlgebraElement.integrate` which is the more likely way you will want to use it.
+        This is used by :meth:`~strataalgebra.StrataAlgebraElement.integrate` which is the more likely way you will want to use it.
         ::
 
             sage: from strataalgebra import *
@@ -568,7 +554,7 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
         
     def _prod(self, ci1, ci2):
         """
-        Compute a product. You should probably not call this directly. Instead, just use the * operator.
+        Compute a product. You should probably not call this directly. Instead, just use the * operator. Values are cached in ``self._prod_dict``.
 
         INPUT:
 
@@ -719,6 +705,7 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
     def psi(self,mark):
         r"""
         Return a psi class.
+        
         :param int mark:  The mark that the :math:`\psi`-class is associated to.
         :rtype: :class:`StrataAlgebraElement`
 
