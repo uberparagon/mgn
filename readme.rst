@@ -5,7 +5,7 @@ The module is distributed on PyPI. You just need to run the following command: :
 
     $ sage -pip install mgn --user
 
-The ``–user`` option is optional and allows you to install the module in your user space (and does not require administrator rights). 
+The ``–-user`` option is optional and allows you to install the module in your user space (and does not require administrator rights). 
 
 If this doesn't work (perhaps because your installation of Sage doesn't support SSL), click on the download link and extract the files. Open a terminal and go to the extracted directory ``mgn`` (which contains the ``setup.py`` file). Run: ::
 
