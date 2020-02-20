@@ -5,16 +5,16 @@ You can change which pairs you want to check by modifying the ``g_n_pairs_to_che
 
 ::
 
-    sage: import strataalgebra.tests as tests
+    sage: from strataalgebra import tests as tests
     sage: tests.run() # not tested
 
 The comment is there so that the doctests don't try to run it.
 """
+from __future__ import absolute_import, print_function
 
 from sage.all import QQ, floor, WeightedIntegerVectors, subsets
 #from sage.all import *
-from strataalgebra import StrataAlgebra
-
+from .strataalgebra import StrataAlgebra
 from topintersections import intnum
 
 g_n_pairs_to_check = [
@@ -61,24 +61,25 @@ def run():
     ok = 0
     bad = 0
     for g,n in g_n_pairs_to_check:
-        print "Beginning to check g = {0}, n = {1}...".format(g,n)
+        print("Beginning to check g = {0}, n = {1}...".format(g,n))
         s = StrataAlgebra(QQ,g,tuple(range(1,n+1)),False)
         for c in get_all_combis(g,n):
-            print c,
+            print(c, end=' ')
             v1 = intnum(g,n,c, confirm = False)
             v2 = s.MgnLb_int(c)
             if v1==v2:
-                print " ok."
+                print(" ok.")
                 ok+=1
             else:
-                print
-                print " FAILED!"
+                print()
+                print(" FAILED!")
                 bad+=1
                 #print c
-                print v1, "vs", v2
+                print(v1, "vs", v2)
 
-    print "{0} tests performed, {1} successful, {2} failed".format(ok+bad,ok,bad)
-            
+    print("{0} tests performed, {1} successful, {2} failed".format(ok+bad,ok,bad))
+
+          
 class doctestclass(object):
     """
     here is the doc

@@ -5,6 +5,7 @@ We create a class ExprWithDataGen that represents a variable.  The class ExprWit
 
 ExprWithData also has some methods that are useful for breaking down polynomials into their terms and monomials into factors.
 """
+from __future__ import print_function
 
 from sage.all import *
 
@@ -102,7 +103,7 @@ class ExprWithData(object):
         This is important... turns the arbitrary variable names into the names you really want.
         """
         repr_str = repr(self.expr)
-        for v, o in self.var_obj_dict.iteritems():
+        for v, o in self.var_obj_dict.items():
             repr_str = repr_str.replace(repr(v), repr(o))
         return repr_str
             
@@ -139,13 +140,14 @@ class ExprWithData(object):
         return ExprWithData(self.expr**other)
         
     def expand(self):
-        print "Warning, monomials already expands it!"
+        print("Warning, monomials already expands it!")
         return ExprWithData(self.expr.expand())
         
     def monomials(self):
         """
         Gives a generator.
-        Yeilds tuples of (monomial, coefficient) for this expression.
+
+        Yields tuples of (monomial, coefficient) for this expression.
         """
         expr = self.expr.expand()
         if expr.operator() == operator.pow or expr.operator() ==None:
@@ -216,7 +218,7 @@ class ExprWithData(object):
         elif self.expr.operator() == sage.symbolic.operators.mul_vararg:
             gothrough = self.expr.operands()
         else:
-            raise Exception, "Not a monomial!"
+            raise Exception("Not a monomial!")
               
             
         for v in gothrough:

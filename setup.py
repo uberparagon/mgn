@@ -2,8 +2,6 @@
 
 from distutils.core import setup
 
-
-
 try:
     from sage.env import SAGE_SRC, SAGE_VERSION
 except ImportError:
@@ -12,7 +10,7 @@ except ImportError:
 
 version = "1.1.1"
 
-print "This is version", version
+print("This is version {}".format(version))
 
 with open("description.rst") as f:
     long_description = f.read()

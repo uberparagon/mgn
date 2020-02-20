@@ -1,14 +1,15 @@
+from __future__ import absolute_import
 #load("tautrel.sage")
 #load("AllStrata.sage")
 from sage.all import Graph, prod, Integer, OrderedSetPartitions, Permutations, flatten
-from stratagraph import StrataGraph
+from .stratagraph import StrataGraph
 import itertools
    
             
 class StrataWithSageGraph(object):
     def __init__(self, strataG):
         self.strataG = strataG
-        self.sageG = Graph([range(1,strataG.num_vertices()+1),[]], multiedges=True, loops = True)
+        self.sageG = Graph([list(range(1,strataG.num_vertices()+1)),[]], multiedges=True, loops = True)
         self.edge_label_to_edge = dict()
         self.vertex_to_marks = {v:[] for v in range(1, self.strataG.num_vertices()+1)}
         self._has_marks = False

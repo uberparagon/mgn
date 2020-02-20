@@ -1,12 +1,16 @@
+from __future__ import absolute_import, print_function
+
 import collections
 import itertools
-from stratagraph import StrataGraph, graph_count_automorphisms, aut, graph_isomorphic, PsiKappaVars, X_to_kappa
+
 from sage.all import Rational, Integer, cached_method, cached_function, IntegerVectors, Partitions, Matrix, Permutations, binomial, factorial, floor, zero_matrix
-from intersect import decorate_with_monomial
 from sage.structure.unique_representation import UniqueRepresentation
 
-A_list = [factorial(6*n)/(factorial(3*n)*factorial(2*n)) for n in range(100)]
-B_list = [factorial(6*n+1)/((6*n-1)*factorial(3*n)*factorial(2*n)) for n in range(100)]
+from .stratagraph import StrataGraph, graph_count_automorphisms, aut, graph_isomorphic, PsiKappaVars, X_to_kappa
+from .intersect import decorate_with_monomial
+
+A_list = [Integer(6*n).factorial()/(Integer(3*n).factorial()*Integer(2*n).factorial()) for n in range(100)]
+B_list = [Integer(6*n+1).factorial()/((6*n-1)*Integer(3*n).factorial()*Integer(2*n).factorial()) for n in range(100)]
 
 
 class OrderedSetWithIndex(collections.OrderedDict):
@@ -52,9 +56,8 @@ class StrataPyramid(UniqueRepresentation):
         self._dstrata[0] = OrderedSetWithIndex()
         self._dstrata[0].add(G)
 
-
     def open_stratum(self):
-        return self._dstrata[0].keys()[0]
+        return next(iter(self._dstrata[0]))
 
     def codim_index_from_graph(self, G):
         codim = G.codim()
@@ -107,7 +110,7 @@ class StrataPyramid(UniqueRepresentation):
     def print_ddims(self):
         self.build_decorations(self.moduli_dim)
         for r in range(self.moduli_dim+1):
-            print r, len(self._dstrata[r].keys())
+            print(r, len(self._dstrata[r].keys()))
       
     def get_stratum(self, r, j):
         """
@@ -121,8 +124,8 @@ class StrataPyramid(UniqueRepresentation):
         """
         if self._dstrata[r] is None:
             self.build_decorations(r)
-        return self._dstrata[r].keys()[j]
-        
+        return list(self._dstrata[r].keys())[j]
+
     def print_strata(self,r):
         """
         Print all the strata, with their indexes, in codimension `r`.
@@ -136,9 +139,9 @@ class StrataPyramid(UniqueRepresentation):
             self.build_decorations(r)
 
         for i,g in enumerate(self._dstrata[r].keys()):
-            print "**** i:",i
-            print g
-            print
+            print("**** i:",i)
+            print(g)
+            print()
     
     @cached_method        
     def _convert_kappa_basis(self,r):
@@ -650,9 +653,9 @@ def decorate1_list(G,r):
             #print i, vec, vec[i] 
             S_list.append(Partitions(vec[i]))
         for i in range(a,a+b):
-            S_list.append([[vec[i]-j,j] for j in range(Rational((vec[i],2)) + 1)])
+            S_list.append([[vec[i]-j,j] for j in range(vec[i] // 2 + 1)])
         S = itertools.product(*S_list) #removed a * here
-        
+
         for vec2 in S:
             G_copy = StrataGraph(G.M)
             for i in range(a):
@@ -666,7 +669,7 @@ def decorate1_list(G,r):
             G_deco.append(G_copy) #[new_type].append(G_copy)
       #print "about to return"
     return G_deco
-    
+
    
 def kappa_coeff_key(sigma,kappa_0,F):
   mmm = F.degree()
@@ -692,7 +695,7 @@ def kappa_coeff(sigma,kappa_0,F):
   total = 0
   num_ones = sum(1 for i in sigma if i == 1)
   for i in range(0,num_ones+1):
-    for injection in Permutations(range(len(target_partition)),len(sigma)-i):
+    for injection in Permutations(list(range(len(target_partition))),len(sigma)-i):
       term = binomial(num_ones,i)*binomial(kappa_0 + len(target_partition) + i-1, i)*factorial(i)
       for j in range(len(sigma)-i):
         term *= C_coeff(sigma[j+i],target_partition[injection[j]])
@@ -754,7 +757,7 @@ def FZ_param_list(n,markings):
     for i in range(mmm):
         if markings_grouped[i] > 0:
             markings_best.append([i+1,markings_grouped[i]])
-    for j in range(n/2 + 1):
+    for j in range(n//2 + 1):
         for n_vec in IntegerVectors(n-2*j,1+len(markings_best)):
             S_list = [[list(sigma) for sigma in Partitions(n_vec[0]).list() if sum(1 for l in sigma if (l % 3) == 2) == 0]]
             for i in range(len(markings_best)):

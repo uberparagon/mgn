@@ -1,6 +1,8 @@
 """This file is for a a future update...."""
+from __future__ import absolute_import
 
 from sage.all import Graph, InfinitePolynomialRing, PolynomialRing
+
 
 class StrataGraph2(object):
     KappaRing = InfinitePolynomialRing(ZZ, "K")
@@ -29,7 +31,7 @@ class StrataGraph2(object):
 
         self.decorations = dict()
 
-        dec_items = self.decorations.items()
+        dec_items = list(self.decorations.items())
         dec_items.sort(lambda x: x[1])
 
         parts = []

@@ -3,12 +3,13 @@ Computes the Witten tau function, i.e. the top intersections of psi classes.
 
 Uses the genus recursion of Liu and Xu from [LX07].
 """
+from __future__ import absolute_import
 
 try:
     from sage.all import *
     from numpy import zeros, array, vectorize, hstack
     #from checkin import *
-    from remember import *
+    from .remember import *
 except ImportError:
     pass
 
@@ -98,7 +99,7 @@ def splittings(a):
     """
     #return [array(c) for c in CartesianProduct(*[range(i+1) for i in a])]
     #sage update broke this
-    return [array(c) for c in cartesian_product([range(i+1) for i in a])]
+    return [array(c) for c in cartesian_product([list(range(i+1)) for i in a])]
     
 def get_exp_list(a):
     """

@@ -16,6 +16,7 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
+from __future__ import absolute_import
 import os
 import sys
 sys.path.insert(0, os.path.abspath('.'))
@@ -299,7 +300,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'strataalgegra', u'StrataAlgegra Documentation',
+    (master_doc, 'strataalgebra', u'StrataAlgebra Documentation',
      [author], 1)
 ]
 

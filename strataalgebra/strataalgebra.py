@@ -1,13 +1,15 @@
+from __future__ import print_function, absolute_import
 
 from sage.all import cached_method, CommutativeRings, prod, Rational, factorial, floor, Matrix, ZZ, subsets, var, RR, repr_lincomb, vector
 from sage.rings.commutative_algebra import CommutativeAlgebra
 from sage.structure.unique_representation import UniqueRepresentation
 from sage.structure.element import CommutativeAlgebraElement
 
-from allstrata import StrataPyramid
-from stratagraph import StrataGraph, PsiKappaVars, graph_count_automorphisms
+from .allstrata import StrataPyramid
+from .stratagraph import StrataGraph, PsiKappaVars, graph_count_automorphisms
 
-from intersect import decorate_with_monomial, genericGHstructures, shared_edges
+from .intersect import decorate_with_monomial, genericGHstructures, shared_edges
+
 
 class StrataAlgebraElement(CommutativeAlgebraElement):
     
@@ -20,7 +22,7 @@ class StrataAlgebraElement(CommutativeAlgebraElement):
         CommutativeAlgebraElement.__init__(self, parent)   
         
     def _repr_(self):
-        l = self.coef_dict.items()
+        l = list(self.coef_dict.items())
         l.sort()
         return repr_lincomb([(self._pretty_basis_name(index[0],index[1]), coef) for index, coef in l])
         
@@ -549,7 +551,7 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
             for r2 in range(1, self.moduli_dim-r1+1):
                 for i in range(self.hilbert(r1)):
                     for j in range(self.hilbert(r2)):
-                        print "******** doing", (r1,i),(r2,j)
+                        print("******** doing", (r1,i),(r2,j))
                         self._prod((r1, i), (r2, j))
         
     def _prod(self, ci1, ci2):
