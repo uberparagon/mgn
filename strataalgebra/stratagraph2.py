@@ -2,20 +2,20 @@
 from __future__ import absolute_import
 
 from sage.all import Graph, InfinitePolynomialRing, PolynomialRing
+from sage.rings.integer_ring import ZZ
 
 
 class StrataGraph2(object):
     KappaRing = InfinitePolynomialRing(ZZ, "K")
     K = KappaRing.gen()
 
-    PsiRing = PolynomialRing(ZZ,"psi")
+    PsiRing = PolynomialRing(ZZ, "psi")
     psi = PsiRing.gen()
-
 
     def __init__(self, strataG):
         #make the graph
 
-        graphU = Graph()
+        G = Graph()
 
         for v in range(1,strataG.num_vertices()):
             G.add_vertex(v)
@@ -24,10 +24,6 @@ class StrataGraph2(object):
                     genus = coef
                 else:
                     pass
-
-
-
-
 
         self.decorations = dict()
 
@@ -48,7 +44,7 @@ class StrataGraph2(object):
 
         self.dec_list = tuple(dec_list)
 
-        self.graph, cert = graphUncan.canoncial_labeling(parts).copy(immutable = True)
+        self.graph, cert = graphUncan.canonical_labeling(parts).copy(immutable = True)
 
         self.parts = tuple(( tuple([cert[i] for i in part_j].sort) for part_j in parts))
 
@@ -57,13 +53,3 @@ class StrataGraph2(object):
 
     def __hash__(self):
         return hash(self.parts, self.graph, self.dec_list)
-
-
-
-
-
-
-
-
-
-

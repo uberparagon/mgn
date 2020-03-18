@@ -311,7 +311,6 @@ class StrataPyramid(UniqueRepresentation):
             relation = [FZ_coeff(G,FZ_param) for G in generators]
             #print "rel", relation
             relations.append(relation)
-        old_count = len(relations)
 
         for r0 in range(1,r):
             strata = self._dstrata[r0].keys()#get_all_strata(g,r0,markings,moduli_type)

@@ -1,6 +1,6 @@
 from __future__ import print_function, absolute_import
 
-from sage.all import cached_method, CommutativeRings, prod, Rational, factorial, floor, Matrix, ZZ, subsets, var, RR, repr_lincomb, vector
+from sage.all import cached_method, CommutativeRings, prod, Rational, factorial, floor, Matrix, ZZ, subsets, var, repr_lincomb, vector
 from sage.rings.commutative_algebra import CommutativeAlgebra
 from sage.structure.unique_representation import UniqueRepresentation
 from sage.structure.element import CommutativeAlgebraElement
@@ -110,9 +110,8 @@ class StrataAlgebraElement(CommutativeAlgebraElement):
             Strata algebra with genus 1 and markings (1, 2, 3) over Rational Field
             sage: a = s.psi(1)*s.psi(2) - 7* s.kappa(3); a
             ps1*ps2 - 7*ka3
-            sage: a.dict()
+            sage: a.dict()  # random order
             {ps1*ps2: 1, ka3: -7}
-
         """
         return {self.parent().strataP.get_stratum(r,i) : c for (r,i), c in self.coef_dict.items() if c !=0}
 
@@ -318,7 +317,7 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
 
             sage: 3*b
             3*s_2,7
-            sage: a*72 - b/17
+            sage: a*72 - 1/17*b
             72*s_2,1 - 1/17*s_2,7
 
         Use :meth:`~strataalgebra.StrataAlgebra.get_stratum` if you need to know what an unamed basis element means. ::
@@ -668,10 +667,7 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
         """
         result = 1
         G = Gs.G.strataG
-        A = Gs.A.strataG
         for v in range(1,G.num_vertices()+1):
-            #print "Gs", Gs
-            #print "G,g",v
             result *= prod(( sum((kappa.get((j,w),0) for w in Gs.alpha_inv[v]))**f for j,f in G.kappa_on_v(v))) * prod(( Gs.psi_no_loop(edge,v,ex,psi) for edge, ex in G.psi_no_loop_on_v(v) )) * prod(( Gs.psi_loop(edge,v, ex1, ex2, psi,psi2) for edge, ex1, ex2 in G.psi_loop_on_v(v) ))
 
         return result                    
@@ -786,7 +782,7 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
             sage: s.kappa(3)
             ka3
             sage: s.kappa(1)*s.kappa(2)
-            ka1*ka2
+            ka2*ka1
             sage: s.kappa(2)*s.kappa(2)
             0
             sage: s.boundary(1,())*s.kappa(1)
