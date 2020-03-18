@@ -1,10 +1,13 @@
+from __future__ import absolute_import, print_function
+
 try:
     from sage.all import *
-    from exprwdata import *
-    from LazyAttr import lazy_attr
-    from richcomparisonmixin import RichComparisonMixin
+    from .exprwdata import *
+    from .LazyAttr import lazy_attr
+    from .richcomparisonmixin import RichComparisonMixin
 except ImportError:
     pass
+
 
 class Mgn(object):
     """
@@ -58,7 +61,7 @@ class Mgn(object):
         try:
             return self.classes.index(cls) + 1
         except:
-            raise Exception, "Someone asked for " + str(cls) + ", which is not here " + str(self)
+            raise Exception("Someone asked for " + str(cls) + ", which is not here " + str(self))
             
         
     def complementary_component(self, big_space):
@@ -66,10 +69,10 @@ class Mgn(object):
         Assuming that this Mgn represents a reducible componet, then find its complement in the big_space.        
         """
         if not self.marks.issubset(big_space.marks):
-            print self, big_space
-            raise Exception, "Bad marked points"
+            print(self, big_space)
+            raise Exception("Bad marked points")
         if not self.genus <= big_space.genus:
-            raise Exception, "Bad genus"
+            raise Exception("Bad genus")
         return Mgn(big_space.genus - self.genus, big_space.marks.difference(self.marks))
         
         
@@ -144,7 +147,7 @@ class Mgn(object):
         Prints a list of all the Tautalogical classes for this space, with their index.  The name is borrowed from Faber, I think it is Dutch.  I provide an engligh alias, but I don't know a short name to call it.
         """
         for i, c in zip(range(len(self.classes)), self.classes):
-            print "[" + str(i+1) + "]  " + repr(c) #+ " --- " + str(c) 
+            print("[" + str(i+1) + "]  " + repr(c)) #+ " --- " + str(c) 
             
     print_classes = rij
             
@@ -223,7 +226,7 @@ class Mgn(object):
         """
         To catch a common mistake...
         """
-        raise Exception, "Don't iterate this!  Did you pass this to intersect without putting it in a list?"
+        raise Exception("Don't iterate this!  Did you pass this to intersect without putting it in a list?")
         
         
     def degree_index_dict(self):
@@ -302,7 +305,7 @@ class TautRingElement(ExprWithDataGen):
         return ExprWithDataGen.__new__(cls)
     
         
-    def pullback_red(self, (M1, p1), (M2, p2)):
+    def pullback_red(self, M1p1, M2p2):
         """
         This method must be overridden.
         
@@ -329,7 +332,9 @@ class psi_class(TautRingElement):
     def change_space(self, space):
         return psi_class(space, self.mark)
         
-    def pullback_red(self, (M1, p1), (M2, p2)):
+    def pullback_red(self, M1p1, M2p2):
+        M1, p1 = M1p1
+        M2, p2 = M2p2
         if self.mark in M1.marks:
             return self.change_space(M1)
         else:
@@ -367,7 +372,9 @@ class nice_class(TautRingElement):
     def change_space(self, new_space):
         return self.__class__(new_space, self.degree)
         
-    def pullback_red(self, (M1, p1), (M2, p2)):
+    def pullback_red(self, M1p1, M2p2):
+        M1, p1 = M1p1
+        M2, p2 = M2p2
         #NOTE: this is not correct for higher lambdas!!!!!!!!!!
         return self.change_space(M1) + self.change_space(M2)
         
@@ -456,10 +463,12 @@ class reducible_boundary(TautRingElement, RichComparisonMixin):
         #print "change space", self, space
         return reducible_boundary(space, self.component1)
         
-    def pullback_red(self, (M1, p1), (M2, p2)):
+    def pullback_red(self, M1p1, M2p2):
         """
         See [Fab99].
         """
+        M1, p1 = M1p1
+        M2, p2 = M2p2
         if self.component1.add_marks(p1) == M1: 
             return_value = - psi_class(M1, p1) - psi_class(M2, p2)
             if self.space.n == 0 and M1.genus < M2.genus:
@@ -552,10 +561,12 @@ class irreducible_boundary(TautRingElement):
     def change_space(self, space):
         return irreducible_boundary(space)
         
-    def pullback_red(self, (M1, p1), (M2, p2)):
+    def pullback_red(self, M1p1, M2p2):
         """
         See [Fab99].
         """
+        M1, p1 = M1p1
+        M2, p2 = M2p2
         return irreducible_boundary(M1) + irreducible_boundary(M2)
         
     def pullback_irr(self, M, p1, p2):  
@@ -643,7 +654,7 @@ class lambda_class(nice_class):
     
     #as_chern_chars_dict = dict()
     
-    def pullback_red(self, (M1, p1), (M2, p2)):
+    def pullback_red(self, M1p1, M2p2):
         raise Exception("Pullback has not been implemented for lambdas, but you should be able to avoid this.")
         
     def as_chern_chars(self):

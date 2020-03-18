@@ -1,10 +1,13 @@
 """
 This file implements the user interface.  This is the file that should be loaded by the user.  It will import everything you need.
 """
+from __future__ import absolute_import
+
+from six.moves.cPickle import dump, load, UnpicklingError
 
 try:
-    from intersection7 import *
-    from TautRing3 import Mgn
+    from .intersection7 import *
+    from .TautRing3 import Mgn
     from sage.all import *
 except ImportError:
     pass
@@ -14,7 +17,7 @@ default_file = "mgn_top_intersect.dat"
 import sys
 #if len(sys.argv) >= 2 and sys.argv[1] == "-i":        #Print this message if you load from interactive sage.
 if False: #don't print this message any more
-    print """***************************************************************************
+    print("""***************************************************************************
 Welcome to the intersection number computer for the moduli space of curves!
 
 Written by Drew Johnson, based on Carel Faber's exposition and Maple code.
@@ -28,7 +31,7 @@ load_data("filname") to retrieve previously saved data.  The default filename is
 "{0}" if not specified.
 
 Ctrl-D to quit.
-***************************************************************************""".format(default_file)
+***************************************************************************""".format(default_file))
 
 current_space = None
 def space(g,n, namespace = None, print_classes = True):
@@ -79,7 +82,7 @@ def intnum(*args, **keywrds):
     M = keywrds.get("space")
     if M != None:
         if len(args) != 1:
-            print "If you specify the space, you need only one argument!"
+            print("If you specify the space, you need only one argument!")
         if isinstance(args[0], list):
             p = prod((M[i] for i in args[0]))
         else:
@@ -87,7 +90,7 @@ def intnum(*args, **keywrds):
     
     elif len(args) == 1:    
         if isinstance(current_space, type(None)):
-            print 'Please specify the genus and number of marked points as the first arguments, or set the default space you wish to work over using the "space" function'
+            print('Please specify the genus and number of marked points as the first arguments, or set the default space you wish to work over using the "space" function')
             return
         M = current_space
         if isinstance(args[0], list):
@@ -102,15 +105,15 @@ def intnum(*args, **keywrds):
         else:
             p = change_space(args[2],M)
     else:
-        print "Syntax incorrect, please see docstring (type ``help(intnum)``)"
+        print("Syntax incorrect, please see docstring (type ``help(intnum)``)")
         return
     
     if keywrds.get("confirm", True):
-        print "Computing the intersection of {0} over {1}...".format(repr(p), repr(M))
+        print("Computing the intersection of {0} over {1}...".format(repr(p), repr(M)))
     try:
         return intersect([M],p, keywrds.get("check_degree", True))
     except BadDegreeException as excpt:
-        print excpt
+        print(excpt)
         
         
     
@@ -130,39 +133,31 @@ def save_data(filename = default_file, prompt = True):
     if prompt and os.path.exists(filename):
         confirm = raw_input("Overwrite existing file " + filename + " (y for yes)?  ")
         if confirm.lower() != "y":
-            print "Save aborted."
+            print("Save aborted.")
             return
-            
-    import cPickle
-    try:
-        f = open(filename, "wb")
+
+    with open(filename, "wb") as f:
         try:
-            cPickle.dump(master_table, f, protocol = 2)
+            dump(master_table, f, protocol = 2)
         except Exception as ex:
-            print ex
+            print(ex)
             return
-        finally:
-            f.close()            
-    except IOError:
-        print "Error opening file. Could not save." 
-    else:
-        print "Save suceeded."
+    print("Save suceeded.")
     
     
         
 def load_data(filename = default_file):
     global master_table
-    import cPickle
     try:
         f = open(filename, "rb") 
         try:
-            master_table.update(cPickle.load(f))
-        except cPickle.UnpicklingError:
-            print "Problem loading data... perhaps the data is corrupted or not in the right format?"
+            master_table.update(load(f))
+        except UnpicklingError:
+            print("Problem loading data... perhaps the data is corrupted or not in the right format?")
             return
         finally:
             f.close()
     except IOError:
-        print "Could not load file.  Does the file exist?"
+        print("Could not load file.  Does the file exist?")
     else:
-        print "Data loaded."
+        print("Data loaded.")

@@ -1,15 +1,16 @@
 """
 This is the file with the main intersection code!
 """
+from __future__ import absolute_import, print_function
 
 try:
     from sage.all import *
-    from TautRing3 import *
-    from tau import *
+    from .TautRing3 import *
+    from .tau import *
     #from checkin import *
-    from remember import remember_convert_args
-    from push_down import push_down
-    
+    from .remember import remember_convert_args
+    from .push_down import push_down
+
 
 except ImportError:
     pass
@@ -330,10 +331,9 @@ def intersect_monomial_not_product(space, m, check_degree = False):
     """
     data = monomial_data(space[0], m)
 
-        
     if data.vanishes_by_degree():
         if check_degree:
-            raise BadDegreeException, "The monomial {0} has degree {1}, while the space {2} has dimension {3}.".format(m, data.degree(), repr(space[0]), space[0].dimension)            
+            raise BadDegreeException("The monomial {0} has degree {1}, while the space {2} has dimension {3}.".format(m, data.degree(), repr(space[0]), space[0].dimension))
         else:
             return 0
     

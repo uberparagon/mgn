@@ -1,6 +1,8 @@
+from __future__ import print_function, absolute_import
 import itertools
 from sage.all import PolynomialRing, var, factorial, Matrix, ZZ, cached_function, copy, Permutations, SetPartitions, prod, SR, var, sage, Integer, operator
   
+
 class StrataGraph(object):
   R = PolynomialRing(ZZ,"X",1,order='lex')
   Xvar = R.gen()
@@ -83,7 +85,7 @@ class StrataGraph(object):
     #i should have degree d, there should be no classes near i, and G should have markings 1,...,d and genus equal to the genus of i
     hedge_list = []
     for k in range(1,self.M.ncols()):
-      for j in range(self.M[i,k]):
+      for j in range(ZZ(self.M[i,k])):
         hedge_list.append(k)
     self.del_vertex(i)
     for j in range(G.num_edges() - len(hedge_list)):
@@ -179,10 +181,8 @@ class StrataGraph(object):
         if self.M[0,e] == 0:
             codim +=1   
     return codim
-    
-                    
-            
-    print "not implemented!!!!!!"
+
+    print("not implemented!!!!!!")
     return 1
 
         
@@ -453,7 +453,7 @@ def graph_isomorphic(G1,G2):
 
 def isomorphic(M1,M2,group1,group2):
   nr,nc = M1.nrows(),M1.ncols()
-  PermList = [Permutations(range(len(group))) for group in group1]
+  PermList = [Permutations(list(range(len(group)))) for group in group1]
   for sigma_data in itertools.product(*PermList):
     sigma = [0 for i in range(nr-1)]
     for i in range(len(group1)):
@@ -490,7 +490,7 @@ def graph_count_automorphisms(G,vertex_orbits=False):
 def count_automorphisms(M,grouping,vertex_orbits=False):
   nr,nc = M.nrows(),M.ncols()
   count = 0
-  PermList = [Permutations(range(len(group))) for group in grouping]
+  PermList = [Permutations(list(range(len(group)))) for group in grouping]
   if vertex_orbits:
     isom_list = []
   for sigma_data in itertools.product(*PermList):
@@ -614,7 +614,7 @@ def X_to_kappa(f,kappa):
         
     #print psi_list
     result = 0 
-    for p in SetPartitions(range(len(psi_list))):   
+    for p in SetPartitions(list(range(len(psi_list)))):   
         #print p  
         #print [ kappa( sum((psi_list[i] for i in s)) ) for s in p]
         result +=   prod((factorial(len(s) - 1) for s in p)) * prod(( kappa( sum((psi_list[i] for i in s)) ) for s in p ))

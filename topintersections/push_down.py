@@ -3,9 +3,10 @@ Contains the function push_down, which is used by intersection7.py.
 
 Not sure if there is a good reason for this to be in its own file.
 """
+from __future__ import absolute_import, print_function
 
 try:
-    from TautRing3 import *
+    from .TautRing3 import *
     from sage.all import *
 except ImportError:
     pass
@@ -19,9 +20,9 @@ def push_down(psi_exp, g,n):
     if len(psi_exp) == n:
         #use AC formula
         if g == 0:
-            raise Exception, "???"
+            raise Exception("???")
         elif g == 1:
-            raise Exception, "???"
+            raise Exception("???")
         else:
             M = Mgn(g,0)
         result = 0
@@ -36,10 +37,3 @@ def push_down(psi_exp, g,n):
             a[i] -= 1
             value += push_down(a, g,n-1)
         return value
-        
-        
-        
-
-    
-    
-    
