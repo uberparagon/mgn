@@ -3,7 +3,8 @@ This file implements the user interface.  This is the file that should be loaded
 """
 from __future__ import absolute_import
 
-from six.moves.cPickle import dump, load, UnpicklingError
+#from six.moves.cPickle import dump, load, UnpicklingError
+import pickle
 
 try:
     from .intersection7 import *
@@ -131,14 +132,14 @@ def save_data(filename = default_file, prompt = True):
     global master_table
     import os
     if prompt and os.path.exists(filename):
-        confirm = raw_input("Overwrite existing file " + filename + " (y for yes)?  ")
+        confirm = input("Overwrite existing file " + filename + " (y for yes)?  ")
         if confirm.lower() != "y":
             print("Save aborted.")
             return
 
     with open(filename, "wb") as f:
         try:
-            dump(master_table, f, protocol = 2)
+            pickle.dump(master_table, f, protocol = 2)
         except Exception as ex:
             print(ex)
             return
@@ -151,8 +152,8 @@ def load_data(filename = default_file):
     try:
         f = open(filename, "rb") 
         try:
-            master_table.update(load(f))
-        except UnpicklingError:
+            master_table.update(pickle.load(f))
+        except pickle.UnpicklingError:
             print("Problem loading data... perhaps the data is corrupted or not in the right format?")
             return
         finally:
