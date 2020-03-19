@@ -6,16 +6,13 @@ from __future__ import absolute_import
 #from six.moves.cPickle import dump, load, UnpicklingError
 import pickle
 
-try:
-    from .intersection7 import *
-    from .TautRing3 import Mgn
-    from sage.all import *
-except ImportError:
-    pass
+from .intersection7 import intersect, BadDegreeException
+from .TautRing3 import Mgn
+from sage.all import prod
 
 
 default_file = "mgn_top_intersect.dat"
-import sys
+
 #if len(sys.argv) >= 2 and sys.argv[1] == "-i":        #Print this message if you load from interactive sage.
 if False: #don't print this message any more
     print("""***************************************************************************

@@ -1,12 +1,12 @@
 from __future__ import absolute_import, print_function
 
-try:
-    from sage.all import *
-    from .exprwdata import *
-    from .LazyAttr import lazy_attr
-    from .richcomparisonmixin import RichComparisonMixin
-except ImportError:
-    pass
+from sage.all import subsets, floor, bernoulli, factorial, ceil, SR, PowerSeriesRing
+from sage.misc.misc import inject_variable
+
+from .exprwdata import ExprWithDataGen, ExprWithData
+from .LazyAttr import lazy_attr
+from .richcomparisonmixin import RichComparisonMixin
+
 
 
 class Mgn(object):
@@ -157,7 +157,7 @@ class Mgn(object):
         """
         #print "entering mak!!!"
         for cl in self.classes:
-            sage.misc.misc.inject_variable(repr(cl),cl, warn=False)
+            inject_variable(repr(cl),cl, warn=False)
         #for long_name_for_class_that_probably_wont_be_in_global_namespace in self.classes:
             #if long_name_for_class_that_probably_wont_be_in_global_namespace != 0:
                 #exec(repr(long_name_for_class_that_probably_wont_be_in_global_namespace) + " = long_name_for_class_that_probably_wont_be_in_global_namespace", locals(), where)

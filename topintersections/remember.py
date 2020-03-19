@@ -18,7 +18,7 @@ def remember_convert_args(converter, storing_dict = dict()):
         def __call__(self, *args):
             key = converter(*args)
             value = self.stored.get(key, None)
-            if value != None:
+            if value is not None:
                 #print("retrieving stored value for input {0}, returning {1}".format(key,value))
                 return value
             #print("computing value")
@@ -27,8 +27,8 @@ def remember_convert_args(converter, storing_dict = dict()):
             return value
             
         def save(self, filename):
-            with open(filname, "w") as f:
-                pickle.dump(self.stored,f)
+            with open(filename, "w") as f:
+                pickle.dump(self.stored, f)
                 
         def load(self, filename):
             with open(filename, "r") as f:
@@ -38,4 +38,3 @@ def remember_convert_args(converter, storing_dict = dict()):
         return remember_class(func)
             
     return use_converter
-    

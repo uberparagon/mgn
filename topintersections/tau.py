@@ -5,21 +5,19 @@ Uses the genus recursion of Liu and Xu from [LX07].
 """
 from __future__ import absolute_import
 
-try:
-    from sage.all import *
-    from numpy import zeros, array, vectorize, hstack
-    #from checkin import *
-    from .remember import *
-except ImportError:
-    pass
+from sage.all import Integer, Rational, prod, binomial, multinomial, cartesian_product
+from numpy import zeros, array, hstack
+from .remember import remember_convert_args
 
-def ee(k,n):
+
+def ee(k, n):
     """
     Returns the k-th n-dimensional "basis vector". 
     """
     v = zeros(n, dtype = Integer)
     v[k] = 1
     return v
+
 
 #@breadth_first_tree
 def tau_no_g(a):

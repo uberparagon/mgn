@@ -5,17 +5,14 @@ Not sure if there is a good reason for this to be in its own file.
 """
 from __future__ import absolute_import, print_function
 
-try:
-    from .TautRing3 import *
-    from sage.all import *
-except ImportError:
-    pass
+from .TautRing3 import Mgn, kappa_class
+from sage.all import SetPartitions, prod, factorial
+
     
-def push_down(psi_exp, g,n):
+def push_down(psi_exp, g, n):
     """
     Pushes down the psi_classes via forgetful maps as far as possible, using the string equation and the formula from [AC].  Returns a polynomial in psi and kappa classes.
     """
-    #print "recieved",psi_exp,g,n
     psi_exp = [expon for expon in psi_exp if expon != 0]
     if len(psi_exp) == n:
         #use AC formula
