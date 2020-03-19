@@ -29,7 +29,7 @@ g_n_pairs_to_check = [
 def get_all_combis(g,n):
     dim = 3*g-3 + n
     reducible_boundaries = 0
-    marks = range(1,n+1)
+    marks = list(range(1,n+1))
     if n != 0:
         first_mark_list = [marks.pop()]            
         for g1 in range(0, g + 1):
@@ -43,8 +43,8 @@ def get_all_combis(g,n):
             reducible_boundaries+=1
 
     #print "computed red bound"
-    indexes = range(1,n+dim+1) + range(n+dim+g+1, n+dim+g+reducible_boundaries + 2)
-    codims = [1]*n + range(1,dim+1) + [1]*(reducible_boundaries +1)
+    indexes = list(range(1,n+dim+1)) + list(range(n+dim+g+1, n+dim+g+reducible_boundaries + 2))
+    codims = [1]*n + list(range(1,dim+1)) + [1]*(reducible_boundaries +1)
     
     for w in WeightedIntegerVectors(dim,codims):
         combi = []
