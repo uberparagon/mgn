@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 #load("tautrel.sage")
 #load("AllStrata.sage")
-from sage.all import Graph, prod, Integer, OrderedSetPartitions, Permutations, flatten
+from sage.all import Graph, Integer, OrderedSetPartitions, Permutations, flatten
 from .stratagraph import StrataGraph
 import itertools
    

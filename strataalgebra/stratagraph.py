@@ -1,6 +1,6 @@
 from __future__ import print_function, absolute_import
 import itertools
-from sage.all import PolynomialRing, var, factorial, Matrix, ZZ, cached_function, copy, Permutations, SetPartitions, prod, SR, var, sage, Integer, operator
+from sage.all import PolynomialRing, var, factorial, Matrix, ZZ, cached_function, copy, Permutations, SetPartitions, prod, SR, sage, Integer, operator
   
 
 class StrataGraph(object):
@@ -69,7 +69,6 @@ class StrataGraph(object):
     self.parity_vec = [(ZZ(1+self.M[i,0][0]+sum(self.M[i,k][1] for k in range(1,self.M.ncols()))+sum(self.M[i,k][2] for k in range(1,self.M.ncols()))+self.M[i,0].derivative(X).substitute(X=1)) % 2) for i in range(1,self.M.nrows())]
     
   def compute_parity_vec(self):
-    X = StrataGraph.Xvar
     self.parity_vec = [(ZZ(1+self.M[i,0][0]+sum(self.M[i,k][1] for k in range(1,self.M.ncols()))+sum(self.M[i,k][2] for k in range(1,self.M.ncols()))+self.last_parity_summand(i)) % 2) for i in range(1,self.M.nrows())]
     
   def last_parity_summand(self,i):
