@@ -216,7 +216,7 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
         :param Ring base: The ring of coefficients you want to work over, usually ``QQ``.
         :param int g: The genus.
         :param tuple markings: The markings should be positive integers. Repeats are allowed. Defaults to no markings.
-        :param bool make_vars: Defaults to True. If True, creates variables ``ps``, ``ps_``, ``ka1``, ... , ``ka{d}`` (where d is the dimension of the moduli space) that can be used to create basis elements.
+        :param bool make_vars: Defaults to True. If True, creates variables ``ps``, ``ps_``, ``ka1``, ... , ``ka{d}`` (where d is the dimension of the moduli space) that can be used to create basis elements. Remark: in the update to Sage 9, it seems like this option does nothing now.
             
         First import the module: ::
         
@@ -335,8 +335,7 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
 
         You can construct an element using the matrix notation. Just pass a list of lists into your :class:`StrataAlgebra`. ::
         
-            sage: var('ps') #This is usually done automatically, but we have to do it manually here for the dotests to work.
-            ps
+            sage: ps = SA.ps #For convenience in the examples.
             sage: SA([[0,1,2,0],[1,0,0,ps+1],[0,1,1,1]])
             s_2,7
 
@@ -349,8 +348,7 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
             sage: s.get_stratum(3,10)
             [         0          0]
             [         1 ps*ps_ + 2]
-            sage: var('ps_')
-            ps_
+            sage: ps_ = s.ps_
             sage: s([[0,0],[1,ps_*ps+2]])
             s_3,10
 
@@ -479,12 +477,19 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
         
         CommutativeAlgebra.__init__(self, base)
 
+        ### This no longer seems to do anything. Perhaps it should be removed?
         if make_vars:
             if self.moduli_dim == 1:
                 var("ka1")
             elif self.moduli_dim > 1:
                 var(["ka{0}".format(a) for a in range(1, self.moduli_dim+1)])
             var(StrataGraph.ps_name,StrataGraph.ps2_name)
+        ###
+
+        ### Lets do this instead:
+        self.__dict__[StrataGraph.ps_name] = var(StrataGraph.ps_name)
+        self.__dict__[StrataGraph.ps2_name] = var(StrataGraph.ps2_name)
+        ### I updated the docstring, but I can't rebuild the docs :(
 
         
     def _repr_(self):
