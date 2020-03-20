@@ -55,15 +55,18 @@ class StrataAlgebraElement(CommutativeAlgebraElement):
         
         return StrataAlgebraElement(self.parent(),new_dict)
 
-    def __div__(self, other):
-        #print "lets try to divide!!!!!!!!"
-        #print "self", self
-        #print "other", other
-
-        if 1/other in self.parent().base():
-            return StrataAlgebraElement(self.parent(), {i:c/other for i,c in self.coef_dict.items()})
-        else:
-            raise Exception("Tried to divide by {0}. Such division not possible!".format(other))
+    def _div_(self, other): #changed double __ to single ???
+        """
+        We assume that other has been coerced into the same ring.
+        """
+        if len(other.coef_dict) == 1:
+            other_num = other.coef_dict.get((0,0),None)
+            if not other_num is None:
+                if 1/other_num in self.parent().base():
+                    return StrataAlgebraElement(self.parent(), {i:(1/other_num)*c for i,c in self.coef_dict.items()})
+        
+        raise Exception("Tried to divide by {0}. Such division not supported!".format(other))
+        
 
     def integrate(self):
         """
@@ -317,7 +320,7 @@ class StrataAlgebra(CommutativeAlgebra, UniqueRepresentation):
 
             sage: 3*b
             3*s_2,7
-            sage: a*72 - 1/17*b
+            sage: a*72 - b/17
             72*s_2,1 - 1/17*s_2,7
 
         Use :meth:`~strataalgebra.StrataAlgebra.get_stratum` if you need to know what an unamed basis element means. ::
