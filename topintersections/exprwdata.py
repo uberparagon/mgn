@@ -7,12 +7,15 @@ ExprWithData also has some methods that are useful for breaking down polynomials
 """
 from __future__ import print_function
 
-from sage.all import *
+from sage.all import Rational, SR, CC, operator, QQ
+from sage.symbolic.operators import mul_vararg, add_vararg
 
 
 class ExprWithDataGen(object):
     """
-    Reprents an atomic expression in your ring of things with data.  This is the subclass of TautRingElement.
+    Represents an atomic expression in your ring of things with data.
+
+    This is the subclass of TautRingElement.
     """
     def __add__(self, other):
         return other + ExprWithData.get_gen(self)
@@ -156,9 +159,9 @@ class ExprWithData(object):
             yield self, 1
             return
         
-        if expr.operator() == sage.symbolic.operators.mul_vararg:
+        if expr.operator() == mul_vararg:
             gothrough = [expr]
-        elif expr.operator() == sage.symbolic.operators.add_vararg:
+        elif expr.operator() == add_vararg:
             gothrough = expr.operands()
         
         for m in gothrough:
@@ -215,7 +218,7 @@ class ExprWithData(object):
         """
         if self.expr.operator() == operator.pow or self.expr.operator() == None:
             gothrough = [self.expr]
-        elif self.expr.operator() == sage.symbolic.operators.mul_vararg:
+        elif self.expr.operator() == mul_vararg:
             gothrough = self.expr.operands()
         else:
             raise Exception("Not a monomial!")
