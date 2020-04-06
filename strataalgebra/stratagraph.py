@@ -1,27 +1,28 @@
 from __future__ import print_function, absolute_import
 import itertools
-from sage.all import PolynomialRing, var, factorial, Matrix, ZZ, cached_function, copy, Permutations, SetPartitions, prod, SR, sage, Integer, operator
-  
+from sage.all import (PolynomialRing, var, factorial, Matrix, ZZ,
+                      cached_function, copy, Permutations, SetPartitions,
+                      prod, SR, sage, Integer, operator)
+
 
 class StrataGraph(object):
   R = PolynomialRing(ZZ,"X",1,order='lex')
   Xvar = R.gen()
-  
-  def __init__(self,M=None,genus_list=None):
-    #print genus_list
+
+  def __init__(self, M=None, genus_list=None):
     if M:
       self.M = copy(M)
     elif genus_list:
       self.M = Matrix(StrataGraph.R,len(genus_list)+1,1,[-1]+genus_list)
     else:
       self.M = Matrix(StrataGraph.R,1,1,-1)
-      
+
   def __repr__(self):
     """
     Drew added this.
     """
     name = self.nice_name()
-    if name == None:
+    if name is None:
         return repr(self.nice_matrix())
     else:
         return name
@@ -67,21 +68,21 @@ class StrataGraph(object):
   def compute_parity_vec_original(self):
     X = StrataGraph.Xvar
     self.parity_vec = [(ZZ(1+self.M[i,0][0]+sum(self.M[i,k][1] for k in range(1,self.M.ncols()))+sum(self.M[i,k][2] for k in range(1,self.M.ncols()))+self.M[i,0].derivative(X).substitute(X=1)) % 2) for i in range(1,self.M.nrows())]
-    
+
   def compute_parity_vec(self):
     self.parity_vec = [(ZZ(1+self.M[i,0][0]+sum(self.M[i,k][1] for k in range(1,self.M.ncols()))+sum(self.M[i,k][2] for k in range(1,self.M.ncols()))+self.last_parity_summand(i)) % 2) for i in range(1,self.M.nrows())]
-    
-  def last_parity_summand(self,i):
-    return sum(( expon[0] * coef for expon, coef in self.M[i,0].dict().items() ))
 
-  def parity(self,i):
-    return self.parity_vec[i-1]
+  def last_parity_summand(self, i):
+    return sum(expon[0] * coef for expon, coef in self.M[i, 0].dict().items())
 
-  def replace_vertex_with_graph(self,i,G):
+  def parity(self, i):
+    return self.parity_vec[i - 1]
+
+  def replace_vertex_with_graph(self, i, G):
     X = StrataGraph.Xvar
     nv = self.num_vertices()
     ne = self.num_edges()
-    #i should have degree d, there should be no classes near i, and G should have markings 1,...,d and genus equal to the genus of i
+    # i should have degree d, there should be no classes near i, and G should have markings 1,...,d and genus equal to the genus of i
     hedge_list = []
     for k in range(1,self.M.ncols()):
       for j in range(ZZ(self.M[i,k])):
@@ -137,29 +138,29 @@ class StrataGraph(object):
       if i == 0 or vertex_invariants[i][1] != vertex_invariants[i-1][1]:
         self.vertex_groupings.append([])
       self.vertex_groupings[-1].append(vertex_invariants[i][0])
-    
-    #Drew added this
+
+    # Drew added this
     self.invariant = tupleit(self.invariant)
     self.hash = hash(self.invariant)
-    
+
   def __eq__(self,other):
-        """
-        Drew added this.
-        """
-        return graph_isomorphic(self, other)
-        
+      """
+      Drew added this.
+      """
+      return graph_isomorphic(self, other)
+
   def __hash__(self):
-        """
-        Drew added this.
-        Note that it returns a value stored when "compute_invariant" is called.
-        """
-        try:
-            return self.hash
-        except:
-            self.compute_invariant()
-            return self.hash
-            
-        
+      """
+      Drew added this.
+
+      Note that it returns a value stored when "compute_invariant" is called.
+      """
+      try:
+          return self.hash
+      except AttributeError:
+          self.compute_invariant()
+          return self.hash
+
   def codim(self):
     codim = 0
     for v in range(1, self.num_vertices()+1):
@@ -169,102 +170,98 @@ class StrataGraph(object):
             for expon, coef in self.M[v,e].dict().items():
                 if expon[0] > 0:
                     codim += coef
-    for e in range(1, self.num_edges()+1):
-        if self.M[0,e] == 0:
-            codim +=1   
+    for e in range(1, self.num_edges() + 1):
+        if self.M[0, e] == 0:
+            codim += 1
     return codim
-    
+
   def codim_undecorated(self):
     codim = 0
-    for e in range(1, self.num_edges()+1):
-        if self.M[0,e] == 0:
-            codim +=1   
+    for e in range(1, self.num_edges() + 1):
+        if self.M[0, e] == 0:
+            codim += 1
     return codim
 
     print("not implemented!!!!!!")
     return 1
 
-        
-  def kappa_on_v(self,v):
+  def kappa_on_v(self, v):
     """
     Drew added this.
-    
     """
-    #print "kappa",self.M[v,0].dict()
-    
-    for ex, coef in self.M[v,0].dict().items():
+    for ex, coef in self.M[v, 0].dict().items():
         if ex[0] != 0:
             yield ex[0], coef
-            
-                
-  def psi_no_loop_on_v(self,v):
+
+  def psi_no_loop_on_v(self, v):
     for edge in range(1,self.num_edges()+1):
         if self.M[v,edge][0] == 1:
             psi_expon = self.M[v,edge][1]
             if psi_expon > 0:
                 yield edge, psi_expon
-                
-  def psi_loop_on_v(self,v):
+
+  def psi_loop_on_v(self, v):
     for edge in range(1,self.num_edges()+1):
         if self.M[v,edge][0] == 2:
             psi_expon1 = self.M[v,edge][1]
             psi_expon2 = self.M[v,edge][2]
             if psi_expon1 > 0:
                 yield edge, psi_expon1, psi_expon2
-                    
-  def moduli_dim_v(self,v):
+
+  def moduli_dim_v(self, v):
     """
     Drew added this.
     """
-    return 3*self.M[v,0][0]-3 + sum(( self.M[v,j][0] for j in range(1, self.num_edges()+1 ) ))
-   
+    return 3 * self.M[v, 0][0] - 3 + sum(self.M[v, j][0] for j in range(1, self.num_edges() + 1))
+
   def num_loops(self):
     count = 0
     for edge in range(1, self.num_edges()+1):
         for v in range(1, self.num_vertices()+1):
-            if self.M[v,edge][0] == 2:
-                count+=1
+            if self.M[v, edge][0] == 2:
+                count += 1
                 break
-                
     return count
-    
+
   def num_undecorated_loops(self):
     count = 0
     for edge in range(1, self.num_edges()+1):
         for v in range(1, self.num_vertices()+1):
-            if self.M[v,edge] == 2:
-                count+=1
+            if self.M[v, edge] == 2:
+                count += 1
                 break
-                
+
     return count
 
   def num_full_edges(self):
       count = 0
-      for edge in range(1, self.num_edges()+1):
-          if sum(( self.M[v,edge][0] for v in range(1, self.num_vertices()+1 ))) == 2:
+      for edge in range(1, self.num_edges() + 1):
+          if sum(self.M[v, edge][0] for v in range(1, self.num_vertices() + 1)) == 2:
               count += 1
       return count
-    
+
   def forget_kappas(self):
     M = copy(self.M)
-    for v in range(1, self.num_vertices()+1):
-        M[v,0] = M[v,0][0]
+    for v in range(1, self.num_vertices() + 1):
+        M[v, 0] = M[v, 0][0]
     return StrataGraph(M)
-    
+
   def forget_decorations(self):
-    M = Matrix(StrataGraph.R,[[self.M[r,c][0] for c in range(self.M.ncols())] for r in range(self.M.nrows())] )
+    M = Matrix(StrataGraph.R, [[self.M[r, c][0]
+                                for c in range(self.M.ncols())]
+                               for r in range(self.M.nrows())])
     Gnew = StrataGraph(M)
-    #Gnew.compute_invariant()
+    # Gnew.compute_invariant()
     return Gnew
-    
-  def is_loop(self,edge):
-    for v in range(1, self.num_vertices()+1):
-      if self.M[v,edge][0] == 2:
+
+  def is_loop(self, edge):
+    for v in range(1, self.num_vertices() + 1):
+      if self.M[v, edge][0] == 2:
         return True
-      if self.M[v,edge][0] == 1:
+      if self.M[v, edge][0] == 1:
         return False
-        
-    raise Exception("Unexpected!")
+
+    raise RuntimeError("Unexpected!")
 
   ps_name = "ps"
   ps2_name = "ps_"
@@ -276,8 +273,8 @@ class StrataGraph(object):
       for v in range(1, self.num_vertices()+1):
           kappas = 1
           for expon, coef in self.M[v,0].dict().items():
-              if expon[0]==0:
-                  Mnice[v,0] += coef
+              if expon[0] == 0:
+                  Mnice[v, 0] += coef
               else:
                   kappas *= var("ka{0}".format(expon[0]))**coef
           if kappas != 1:
@@ -286,11 +283,11 @@ class StrataGraph(object):
           for edge in range(1, self.num_edges()+1):
               psis = 1
               for expon, coef in self.M[v,edge].dict().items():
-                  if expon[0]==0:
-                      Mnice[v,edge] += coef
-                  elif expon[0]==1:
+                  if expon[0] == 0:
+                      Mnice[v, edge] += coef
+                  elif expon[0] == 1:
                       psis *= var(StrataGraph.ps_name)**coef
-                  elif expon[0]==2:
+                  elif expon[0] == 2:
                       psis *= var(StrataGraph.ps2_name)**coef
               if psis != 1:
                   Mnice[v,edge] += psis
@@ -299,22 +296,21 @@ class StrataGraph(object):
   @staticmethod
   def from_nice_matrix(lists):
       Mx = Matrix(StrataGraph.R, len(lists), len(lists[0]))
-      Mx[0,0]=-1
+      Mx[0, 0] = -1
       Mx[0,:] = Matrix([lists[0]])
       for v in range(1, len(lists)):
           if lists[v][0] in ZZ:
-              Mx[v,0]=lists[v][0]
+              Mx[v, 0] = lists[v][0]
               continue
           if lists[v][0].operator() == sage.symbolic.operators.add_vararg:
               operands = lists[v][0].operands()
               if len(operands) != 2:
                   raise Exception("Input error!")
-              genus = operands[1] #the genus
+              genus = operands[1]  # the genus
               kappas = operands[0]
           else:
               kappas = lists[v][0]
               genus = 0
-
 
           if kappas.operator() == sage.symbolic.operators.mul_vararg:
               for operand in kappas.operands():
@@ -333,19 +329,19 @@ class StrataGraph(object):
                       if operand in ZZ:
                           Mx[v,edge] += operand
                       elif operand.operator() is None:
-                          #it is a ps or ps2
+                          # it is a ps or ps2
                           Mx[v,edge] += X
                       elif operand.operator() == operator.pow:
-                          #it is ps^n or ps2^n
+                          # it is ps^n or ps2^n
                           Mx[v,edge] += X * operand.operands()[1]
                       elif operand.operator() == sage.symbolic.operators.mul_vararg:
-                          #it is a ps^n*ps2^m
-                          op1,op2 = operand.operands()
+                          # it is a ps^n*ps2^m
+                          op1, op2 = operand.operands()
                           if op1.operator() is None:
                               exp1 = 1
                           else:
                               exp1 = op1.operand()[1]
-                          if op2.operator() == None:
+                          if op2.operator() is None:
                               exp2 = 1
                           else:
                               exp2 = op2.operand()[1]
@@ -356,24 +352,20 @@ class StrataGraph(object):
                               Mx[v,edge] += exp1*X**2 + exp2*X
       return StrataGraph(Mx)
 
-
-
-
-
   @staticmethod
   def _kappaSR_monom_to_X(expr):
       X = StrataGraph.Xvar
       if expr in ZZ:
           return expr
-      elif expr.operator() == None:
+      elif expr.operator() is None:
           ka_subscript = Integer(str(expr)[2:])
-          return  X ** ka_subscript
+          return X**ka_subscript
       elif expr.operator() == operator.pow:
           ops = expr.operands()
           expon = ops[1]
           ka = ops[0]
           ka_subscript = Integer(str(ka)[2:])
-          return  expon * X ** ka_subscript
+          return expon * X**ka_subscript
 
   def nice_name(self):
       """
@@ -381,14 +373,14 @@ class StrataGraph(object):
       """
       if self.num_vertices() == 1:
           num_loops = self.num_loops()
-          if num_loops >1:
+          if num_loops > 1:
               return None
           elif num_loops == 1:
               if self.codim() == 1:
                   return "D_irr"
               else:
                   return None
-          #else, there are no loops
+          # else, there are no loops
           var_strs = []
           for expon, coef in self.M[1,0].dict().items():
               if expon[0] == 0 or coef == 0:
@@ -397,17 +389,18 @@ class StrataGraph(object):
                   var_strs.append("ka{0}".format(expon[0]))
               else:
                   var_strs.append("ka{0}^{1}".format(expon[0],coef))
-          for he in range(1,self.num_edges()+1): #should only be half edges now
+          for he in range(1, self.num_edges() + 1):
+              # should only be half edges now
               if self.M[1,he][1] > 1:
                   var_strs.append("ps{0}^{1}".format(self.M[0,he],self.M[1,he][1]))
-              elif self.M[1,he][1] ==  1:
+              elif self.M[1,he][1] == 1:
                   var_strs.append("ps{0}".format(self.M[0,he]))
-          if len(var_strs) > 0:
+          if var_strs:
               return "*".join(var_strs)
           else:
               return "one"
-      if self.num_vertices() == 2 and self.num_full_edges() == 1 and self.codim() == 1:
-          #it is a boundary divisor
+      if self.num_vertices() == 2 and self.num_full_edges() == 1 == self.codim():
+          # it is a boundary divisor
           v1_marks = [self.M[0,j] for j in range(1, self.num_edges()+1) if self.M[1,j] == 1 and self.M[0,j] != 0]
           v1_marks.sort()
           v2_marks = [self.M[0,j] for j in range(1, self.num_edges()+1) if self.M[2,j] == 1 and self.M[0,j] != 0]
@@ -421,17 +414,15 @@ class StrataGraph(object):
                   g = self.M[2,0]
           else:
               g = self.M[2,0]
-              #temp = v1_marks
+              # temp = v1_marks
               v1_marks = v2_marks
-              #v2_marks = temp
-          if len(v1_marks) == 0:
+              # v2_marks = temp
+          if not v1_marks:
               return "Dg{0}".format(g)
           else:
-              return "Dg{0}m".format(g) + "_".join([str(m) for m in v1_marks])
+              return "Dg{0}m".format(g) + "_".join(str(m) for m in v1_marks)
 
 
-
-         
 def tupleit(t):
   """
   Drew added this.
@@ -440,17 +431,19 @@ def tupleit(t):
   """
   return tuple(map(tupleit, t)) if isinstance(t, list) else t
 
-def graph_isomorphic(G1,G2):
-  if "invariant" not in G1.__dict__.keys():
+
+def graph_isomorphic(G1, G2):
+  if "invariant" not in G1.__dict__:
     G1.compute_invariant()
-  if "invariant" not in G2.__dict__.keys():
+  if "invariant" not in G2.__dict__:
     G2.compute_invariant()
   if G1.invariant != G2.invariant:
     return False
   else:
-    return isomorphic(G1.M,G2.M,G1.vertex_groupings,G2.vertex_groupings)
+    return isomorphic(G1.M, G2.M, G1.vertex_groupings, G2.vertex_groupings)
 
-def isomorphic(M1,M2,group1,group2):
+
+def isomorphic(M1, M2, group1, group2):
   nr,nc = M1.nrows(),M1.ncols()
   PermList = [Permutations(list(range(len(group)))) for group in group1]
   for sigma_data in itertools.product(*PermList):
@@ -476,15 +469,17 @@ def isomorphic(M1,M2,group1,group2):
         if L1 != L2:
           good = False
           break
-      if good == False:
-        break     
+      if not good:
+        break
     if good:
       return True
   return False
 
+
 @cached_function
 def graph_count_automorphisms(G,vertex_orbits=False):
   return count_automorphisms(G.M,G.vertex_groupings,vertex_orbits)
+
 
 def count_automorphisms(M,grouping,vertex_orbits=False):
   nr,nc = M.nrows(),M.ncols()
@@ -515,8 +510,8 @@ def count_automorphisms(M,grouping,vertex_orbits=False):
         if L1 != L2:
           good = False
           break
-      if good == False:
-        break     
+      if not good:
+        break
     if good:
       count += 1
       if vertex_orbits:
@@ -555,66 +550,75 @@ def count_automorphisms(M,grouping,vertex_orbits=False):
       count *= aut(L)
   return count
 
+
 def aut(L):
-  if len(L) == 0:
+  if not L:
     return 1
   L.sort()
   total = 1
   n = 1
   last = L[0]
-  for l in L[1:]:
-    if l == last:
+  for elt in L[1:]:
+    if elt == last:
       n += 1
     else:
       n = 1
     total *= n
-    last = l
+    last = elt
   return total
 
 
-def PsiKappaVars(A, kappa_only = False):  
-    kappa_names = ["kappa{0}_{1}".format(a,v) for v in range(1,A.num_vertices()+1) for a in range(1,A.moduli_dim_v(v)+1)]
-    
+def PsiKappaVars(A, kappa_only=False):
+    kappa_names = ["kappa{0}_{1}".format(a + 1, v + 1)
+                   for v in range(A.num_vertices())
+                   for a in range(A.moduli_dim_v(v))]
+
     if kappa_only:
-        PsiKappaRing = PolynomialRing(ZZ,  kappa_names, len(kappa_names) )
+        PsiKappaRing = PolynomialRing(ZZ, kappa_names, len(kappa_names))
     else:
-        psi_names = ["psi{0}_{1}".format(e,v) for v in range(1,A.num_vertices()+1) for e in range(1,A.num_edges()+1) if A.M[v,e][0] > 0]
-    
-        psi_names += ["psi{0}_{1}_2".format(e,v) for v in range(1,A.num_vertices()+1) for e in range(1,A.num_edges()+1) if A.M[v,e][0] == 2] 
-    
-        PsiKappaRing = PolynomialRing(ZZ,  kappa_names +psi_names)
-        
-    kappa = {(a,v) : PsiKappaRing.gens_dict()["kappa{0}_{1}".format(a,v)] for v in range(1,A.num_vertices()+1) for a in range(1,A.moduli_dim_v(v)+1) } 
-    
-    #print PsiKappaRing
+        psi_names = ["psi{0}_{1}".format(e,v)
+                     for v in range(1, A.num_vertices()+1)
+                     for e in range(1, A.num_edges()+1) if A.M[v,e][0] > 0]
+
+        psi_names += ["psi{0}_{1}_2".format(e,v)
+                      for v in range(1, A.num_vertices()+1)
+                      for e in range(1, A.num_edges()+1) if A.M[v,e][0] == 2]
+
+        PsiKappaRing = PolynomialRing(ZZ, kappa_names + psi_names)
+
+    kappa = {(a, v): PsiKappaRing.gens_dict()["kappa{0}_{1}".format(a, v)]
+             for v in range(1, A.num_vertices() + 1)
+             for a in range(1, A.moduli_dim_v(v) + 1)}
+
     if kappa_only:
         return PsiKappaRing, kappa
     else:
-        psi = {(e,v) : PsiKappaRing.gens_dict()["psi{0}_{1}".format(e,v)] for v in range(1,A.num_vertices()+1) for e in range(1,A.num_edges()+1) if A.M[v,e][0] > 0 }
-    
-        psi2 = {(e,v) : PsiKappaRing.gens_dict()["psi{0}_{1}_2".format(e,v)] for v in range(1,A.num_vertices()+1) for e in range(1,A.num_edges()+1) if A.M[v,e][0] == 2 }
-        
-        return PsiKappaRing, kappa, psi, psi2
-        
+        psi = {(e, v): PsiKappaRing.gens_dict()["psi{0}_{1}".format(e, v)]
+               for v in range(1, A.num_vertices()+1)
+               for e in range(1, A.num_edges()+1) if A.M[v,e][0] > 0}
 
-def X_to_kappa(f,kappa):
+        psi2 = {(e, v): PsiKappaRing.gens_dict()["psi{0}_{1}_2".format(e, v)]
+                for v in range(1, A.num_vertices()+1)
+                for e in range(1, A.num_edges()+1) if A.M[v,e][0] == 2}
+
+        return PsiKappaRing, kappa, psi, psi2
+
+
+def X_to_kappa(f, kappa):
     """
     f -- A polynomial in X. The constant term is ignored.
+
     kappa -- A function so that kappa(a) is kappa_a.
-    
+
     Returns::
         A polynomial in kappas, converting ...
     """
     psi_list = []
-    for expon,coef in f.dict().items():
-        #print expon[0], coef
-        if expon[0] !=0:
-            psi_list += [expon[0]]*coef
-        
-    #print psi_list
-    result = 0 
-    for p in SetPartitions(list(range(len(psi_list)))):   
-        #print p  
-        #print [ kappa( sum((psi_list[i] for i in s)) ) for s in p]
-        result +=   prod((factorial(len(s) - 1) for s in p)) * prod(( kappa( sum((psi_list[i] for i in s)) ) for s in p ))
+    for expon, coef in f.dict().items():
+        if expon[0] != 0:
+            psi_list += [expon[0]] * coef
+
+    result = 0
+    for p in SetPartitions(list(range(len(psi_list)))):
+        result += prod(factorial(len(s) - 1) for s in p) * prod(kappa(sum(psi_list[i] for i in s)) for s in p)
     return result
